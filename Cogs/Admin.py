@@ -27,7 +27,7 @@ class Admin(Cog):
     admin = SlashCommandGroup(
         name="admin",
         description="Commands for app administration.",
-        contexts=InteractionContextType.guild
+        contexts=[InteractionContextType.guild]
     )
     
 ################################################################################
