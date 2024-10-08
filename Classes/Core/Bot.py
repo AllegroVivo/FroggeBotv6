@@ -5,6 +5,7 @@ import sys
 import traceback
 from datetime import datetime
 from typing import TYPE_CHECKING
+import json
 
 import pytz
 from discord import Attachment, Bot, TextChannel, ApplicationContext, DiscordException, File
@@ -89,7 +90,17 @@ class FroggeBot(Bot):
         
         log.info(None, "Retrieving full API payload...")
         payload = self.api.load_all()
-        print(payload)
+        
+        #TODO: find a better way of getting the absolute path. 
+        #NH: A possible idea is using if __name__ == "__main__" and assuming that
+        #if it isn't called from there, the root directory is somewhere else...
+        #Will have to investigate.
+        try:
+            with open("RuntimeLogs/payload.json", 'w+', encoding='utf8') as file:
+                file.write(json.dumps(payload))
+                log.info(None, "Wrote payload to Runtimelogs/payload.json.")
+        except OSError as e:
+           log.error(None, f'Error reading or writing to RuntimeLogs/payload.json: {e.args}')
         
         for data in payload:
             frogge = self[data["id"]]
