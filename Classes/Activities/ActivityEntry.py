@@ -8,7 +8,7 @@ from discord import User
 from Classes.Common import Identifiable, LazyUser
 
 if TYPE_CHECKING:
-    from Classes import BaseActivity, FroggeBot
+    from Classes import BaseActivity, FroggeBot, GuildData
 ################################################################################
 
 __all__ = ("ActivityEntry", )
@@ -46,6 +46,12 @@ class ActivityEntry(Identifiable, ABC):
         
         return self._parent.bot
     
+################################################################################
+    @property
+    def guild(self) -> GuildData:
+
+        return self._parent.guild
+
 ################################################################################
     @property
     def id(self) -> int:
