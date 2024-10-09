@@ -227,7 +227,7 @@ class Raffle(BaseActivity):
 ################################################################################
     async def entries_report(self, interaction: Interaction) -> None:
 
-        entry_data = self.generate_entries_report_str()
+        entry_data = await self.generate_entries_report_str()
         filename = f"{self.name or 'Unnamed Raffle'} Entries - {datetime.now().strftime('%m-%d-%y')}.txt"
         with open(filename, "w", encoding="utf-8") as f:
             f.write(entry_data)
