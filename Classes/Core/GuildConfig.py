@@ -35,7 +35,7 @@ class GuildConfiguration(FroggeObject):
         self._parent: GuildData = parent
         
         self._tz: Timezone = Timezone(7)  # Default to EST
-        self._log_channel: LazyChannel = None  # type: ignore
+        self._log_channel: LazyChannel = LazyChannel(self, None)
         
 ################################################################################
     async def load(self,  data: Dict[str, Any]) -> None:
