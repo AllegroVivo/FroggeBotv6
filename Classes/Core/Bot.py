@@ -149,7 +149,6 @@ class FroggeBot(Bot):
 
         tb_str = "\n".join(tb_list)
 
-        # Truncate the traceback if it's too long for Discord
         if len(tb_str) > 4000:
             tb_str = tb_str[:4000] + '...'
 

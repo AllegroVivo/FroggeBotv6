@@ -37,6 +37,15 @@ class Staffing(Cog):
         await guild.profile_manager.user_main_menu(ctx.interaction)
 
 ################################################################################
+    @staffing.command(
+        name="clockin",
+        description="Clock in to a shift."
+    )
+    async def staffing_punch(self, ctx: ApplicationContext) -> None:
+
+        guild = self.bot[ctx.guild_id]
+        await guild.process_employee_punch_in(ctx.interaction)
+
 ################################################################################
 def setup(bot: "FroggeBot") -> None:
     

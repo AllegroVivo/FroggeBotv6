@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from typing import TYPE_CHECKING, Any, List, Dict, Optional, Union
 
 from discord import Interaction, User, Embed, TextChannel, ForumChannel, ChannelType, NotFound
@@ -87,6 +88,17 @@ class EventManager(ObjectManager):
     def channel(self, value: Union[TextChannel, ForumChannel]) -> None:
 
         self._channel.set(value)
+
+################################################################################
+    @property
+    def current_event(self) -> Optional[Event]:
+
+        now = datetime.now()
+        for event in self.events:
+            if not (event.start_time or event.end_time):
+                continue
+            if event.start_time - timedelta(minutes=30) <= now <= event.end_time + timedelta(hours=8):
+                return event
 
 ################################################################################
     def update(self) -> None:

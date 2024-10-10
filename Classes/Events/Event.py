@@ -1152,3 +1152,8 @@ class Event(ManagedObject):
         signup.delete()
 
 ################################################################################
+    async def process_employee_punch(self, interaction: Interaction) -> None:
+
+        await self.guild.punch_manager.process_punch_in(interaction, self)
+
+################################################################################

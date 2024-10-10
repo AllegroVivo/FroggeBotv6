@@ -29,7 +29,7 @@ class StaffManager(ObjectManager):
         
         super().__init__(guild)
         
-        self._staff_role: LazyRole = None  # type: ignore
+        self._staff_role: LazyRole = LazyRole(self, None)
         
 ################################################################################
     async def load_all(self, data: Dict[str, Any]):

@@ -24,7 +24,7 @@ class RaffleManagerMenuView(FroggeView):
             ModifyRaffleButton(),
             RemoveRaffleButton(),
             SetRaffleChannelButton(),
-            ViewRafflesButton(),
+            # ViewRafflesButton(),
             CloseMessageButton()
         ]
         for btn in button_list:
