@@ -1,0 +1,65 @@
+{
+  "name": "Number Symbols",
+  "items": [
+    {
+      "name": "Number 0",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Number 1",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Number 2",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Number 3",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Number 4",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Number 5",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Number 6",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Number 7",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Number 8",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Number 9",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    }
+  ]
+}

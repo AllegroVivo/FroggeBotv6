@@ -1,0 +1,75 @@
+{
+  "name": "Number Symbols",
+  "items": [
+    {
+      "id": 53,
+      "name": "Number 0",
+      "unicode": "",
+      "emoji": "<:Number0:1295511449782980712>",
+      "button_row": 0
+    },
+    {
+      "id": 54,
+      "name": "Number 1",
+      "unicode": "",
+      "emoji": "<:Number1:1295511462516756481>",
+      "button_row": 0
+    },
+    {
+      "id": 55,
+      "name": "Number 2",
+      "unicode": "",
+      "emoji": "<:Number2:1295511472675225601>",
+      "button_row": 0
+    },
+    {
+      "id": 56,
+      "name": "Number 3",
+      "unicode": "",
+      "emoji": "<:Number3:1295511484193046589>",
+      "button_row": 0
+    },
+    {
+      "id": 57,
+      "name": "Number 4",
+      "unicode": "",
+      "emoji": "<:Number4:1295511493374246975>",
+      "button_row": 0
+    },
+    {
+      "id": 58,
+      "name": "Number 5",
+      "unicode": "",
+      "emoji": "<:Number5:1295511503016955915>",
+      "button_row": 1
+    },
+    {
+      "id": 59,
+      "name": "Number 6",
+      "unicode": "",
+      "emoji": "<:Number6:1295511513607700480>",
+      "button_row": 1
+    },
+    {
+      "id": 60,
+      "name": "Number 7",
+      "unicode": "",
+      "emoji": "<:Number7:1295511522625458206>",
+      "button_row": 1
+    },
+    {
+      "id": 61,
+      "name": "Number 8",
+      "unicode": "",
+      "emoji": "<:Number8:1295511532838588417>",
+      "button_row": 1
+    },
+    {
+      "id": 62,
+      "name": "Number 9",
+      "unicode": "",
+      "emoji": "<:Number9:1295511545828081684>",
+      "button_row": 1
+    }
+  ]
+}

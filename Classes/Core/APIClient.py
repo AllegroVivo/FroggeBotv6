@@ -1363,3 +1363,34 @@ class APIClient:
         )
 
 ################################################################################
+# Messages Endpoints
+################################################################################
+    def create_pf_message(self, guild_id: int, name: str):
+
+        return self.request(
+            Route("POST", "/messages"),
+            guild_id=guild_id,
+            name=name
+        )
+
+################################################################################
+    def update_pf_message(self, message: PFMessage):
+
+        return self.request(
+            Route(
+                "PUT",
+                "/messages/{message_id}",
+                message_id=message.id
+            ),
+            **message.to_dict()
+        )
+
+################################################################################
+    def delete_pf_message(self, message_id: int):
+
+        return self.request(
+            Route("DELETE", "/messages"),
+            id=message_id
+        )
+
+################################################################################

@@ -218,6 +218,16 @@ class Admin(Cog):
         await ctx.respond(f"```{IconMap().parse_markdown(message)}```")
 
 ################################################################################
+    @admin.command(
+        name="glyph_builder",
+        description="Build a PF message interactively."
+    )
+    async def build_pf_message(self, ctx: ApplicationContext) -> None:
+
+        guild = self.bot[ctx.guild_id]
+        await guild.message_builder.main_menu(ctx.interaction)
+
+################################################################################
 def setup(bot: "FroggeBot") -> None:
     
     bot.add_cog(Admin(bot))

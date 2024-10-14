@@ -16,13 +16,11 @@ DEBUG = os.getenv("DEBUG")
 debug_guilds = None
 if DEBUG == "True":
     debug_guilds = [
-        303742308874977280,  # ASS
         955933227372122173,  # Bot Resources
         992483766306078840,  # FROG
         1254985288631980113,  # LL Bronze
-        1273061765831458866,  # Kupo Nutz
+        # 1273061765831458866,  # Kupo Nutz
         1254984839359234079,  # LL Ruby
-        887317092183994428,  # Toxic Casino
     ]
 
 bot = FroggeBot(

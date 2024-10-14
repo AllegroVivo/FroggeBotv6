@@ -1,0 +1,47 @@
+{
+  "name": "Boxed Roman Numerals",
+  "items": [
+    {
+      "id": 37,
+      "name": "Boxed Numeral 1",
+      "unicode": "",
+      "emoji": "<:BoxedRoman1:1295509762846232578>",
+      "button_row": 0
+    },
+    {
+      "id": 38,
+      "name": "Boxed Numeral 2",
+      "unicode": "",
+      "emoji": "<:BoxedRoman2:1295509770848964770>",
+      "button_row": 0
+    },
+    {
+      "id": 39,
+      "name": "Boxed Numeral 3",
+      "unicode": "",
+      "emoji": "<:BoxedRoman3:1295509778985914408>",
+      "button_row": 0
+    },
+    {
+      "id": 40,
+      "name": "Boxed Numeral 4",
+      "unicode": "",
+      "emoji": "<:BoxedRoman4:1295509788498727084>",
+      "button_row": 1
+    },
+    {
+      "id": 41,
+      "name": "Boxed Numeral 5",
+      "unicode": "",
+      "emoji": "<:BoxedRoman5:1295509796451123224>",
+      "button_row": 1
+    },
+    {
+      "id": 42,
+      "name": "Boxed Numeral 6",
+      "unicode": "",
+      "emoji": "<:BoxedRoman6:1295509805359960094>",
+      "button_row": 1
+    }
+  ]
+}
