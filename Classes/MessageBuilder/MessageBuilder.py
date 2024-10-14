@@ -67,6 +67,7 @@ class MessageBuilder(ObjectManager):
     @property
     def symbol_sets(self) -> List[SymbolMap]:
 
+        self._symbols.sort(key=lambda x: x.name)
         return self._symbols
 
 ################################################################################
