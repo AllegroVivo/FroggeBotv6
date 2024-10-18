@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from discord import User, Interaction, ButtonStyle
 
+from Assets import BotEmojis
 from UI.Common import FroggeView, CloseMessageButton, FroggeButton
 
 if TYPE_CHECKING:
@@ -28,7 +29,8 @@ class RaffleStatusView(FroggeView):
             ToggleActiveButton(),
             RollWinnersButton(),
             CurrentEntriesReportButton(),
-            CloseMessageButton()
+            CloseMessageButton(),
+            PostMessageButton()
         ]
         for btn in button_list:
             self.add_item(btn)
@@ -203,4 +205,23 @@ class CurrentEntriesReportButton(FroggeButton):
             interaction, embed=await self.view.ctx.status(), view=self.view
         )
         
+################################################################################
+class PostMessageButton(FroggeButton):
+
+    def __init__(self):
+
+        super().__init__(
+            style=ButtonStyle.secondary,
+            label="Post Tracking Message",
+            disabled=False,
+            row=4,
+            emoji=BotEmojis.Star
+        )
+
+    async def callback(self, interaction: Interaction):
+        await self.view.ctx.post_tracker(interaction)
+        await self.view.edit_message_helper(
+            interaction, embed=await self.view.ctx.status(), view=self.view
+        )
+
 ################################################################################

@@ -201,24 +201,6 @@ class Admin(Cog):
 
 ################################################################################
     @admin.command(
-        name="parse",
-        description="Parse a message for FFXIV Symbol Markdowns."
-    )
-    async def parse_message(
-        self,
-        ctx: ApplicationContext,
-        message: Option(
-            SlashCommandOptionType.string,
-            name="message",
-            description="The message to parse.",
-            required=True
-        )
-    ) -> None:
-
-        await ctx.respond(f"```{IconMap().parse_markdown(message)}```")
-
-################################################################################
-    @admin.command(
         name="glyph_builder",
         description="Build a PF message interactively."
     )

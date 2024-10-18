@@ -201,7 +201,7 @@ class BaseActivity(ManagedObject, ABC):
         await interaction.respond(embed=confirm)
     
 ################################################################################
-    def page(self) -> Page:
+    async def page(self) -> Page:
         
         raise NotImplementedError
     

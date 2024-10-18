@@ -915,30 +915,6 @@ class APIClient:
         )
 
 ################################################################################
-    def create_template_element(self, element: TemplateElement):
-
-        return self.request(
-            Route("POST", "/events/templates/elements"),
-            **element.to_dict()
-        )
-
-################################################################################
-    def create_template_shift(self, shift: TemplateShift):
-
-        return self.request(
-            Route("POST", "/events/templates/shifts"),
-            **shift.to_dict()
-        )
-
-################################################################################
-    def create_template_position(self, pos: TemplatePosition):
-
-        return self.request(
-            Route("POST", "/events/templates/positions"),
-            **pos.to_dict()
-        )
-
-################################################################################
 # Giveaway Endpoints
 ################################################################################
     def create_giveaway(self, guild_id: int):

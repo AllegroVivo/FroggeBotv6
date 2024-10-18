@@ -31,13 +31,13 @@ from UI.Events import (
     EventSignupView,
     EventListView,
     EventStaffManagementView,
+    EventTemplateView,
 )
 from Utilities import Utilities as U
 from logger import log
 from .EventDetails import EventDetails
 from .EventPosition import EventPosition
 from .EventSignup import EventSignup
-from .EventTemplate import EventTemplate
 from .ShiftBracket import ShiftBracket
 
 if TYPE_CHECKING:
@@ -57,6 +57,7 @@ class Event(ManagedObject):
         "_shifts",
         "_positions",
         "_post_msg",
+        "_is_template",
     )
 
 ################################################################################
@@ -67,6 +68,7 @@ class Event(ManagedObject):
         self._details: EventDetails = EventDetails(self, **kwargs)
         self._shifts: List[ShiftBracket] = kwargs.get("shifts", [])
         self._positions: List[EventPosition] = kwargs.get("positions", [])
+        self._is_template: bool = kwargs.get("is_template", False)
 
         self._post_msg: LazyMessage = LazyMessage(self, kwargs.get("post_url"))
 
@@ -89,6 +91,7 @@ class Event(ManagedObject):
         self._details = EventDetails.load(self, data)
         self._shifts = [ShiftBracket.load(self, s) for s in data["shift_brackets"]]
         self._positions = [EventPosition.load(self, p) for p in data["positions"]]
+        self._is_template = data.get("is_template", False)
 
         self._post_msg = LazyMessage(self, data.get("post_url"))
 
@@ -96,27 +99,17 @@ class Event(ManagedObject):
 
 ################################################################################
     @classmethod
-    def from_template(cls: Type[E], mgr: EventManager, template: EventTemplate) -> E:
+    def copy(cls: Type[E], template: Event) -> Event:
 
-        new_data = mgr.bot.api.create_event(mgr.guild_id)
+        # Call the API to create a new event for the template data
+        new_event = cls.new(template._mgr)  # type: ignore
 
-        new_event = cls.__new__(cls)
+        # Transfer the relevant details from the template to the new event
+        new_event._details = EventDetails.copy(new_event, template)
+        new_event._shifts = [ShiftBracket.copy(new_event, s) for s in template._shifts]
+        new_event._positions = [EventPosition.copy(new_event, p) for p in template._positions]
 
-        new_event._id = new_data["id"]
-        new_event._mgr = mgr
-
-        new_event._details = EventDetails.from_template(new_event, template)
-        new_event._shifts = [
-            ShiftBracket.from_template(new_event, bracket)
-            for bracket in template.shifts
-        ]
-        new_event._positions = [
-            EventPosition.from_template(new_event, pos)
-            for pos in template.positions
-        ]
-
-        new_event._post_msg = None
-
+        new_event.update()
         return new_event
 
 ################################################################################
@@ -180,6 +173,18 @@ class Event(ManagedObject):
 
 ################################################################################
     @property
+    def is_template(self) -> bool:
+
+        return self._is_template
+
+    @is_template.setter
+    def is_template(self, value: bool) -> None:
+
+        self._is_template = value
+        self.update()
+
+################################################################################
+    @property
     def signups(self) -> List[EventSignup]:
 
         return [
@@ -228,6 +233,7 @@ class Event(ManagedObject):
             "end_time": self.end_time.isoformat() if self.end_time else None,
             "image_url": self.image,
             "post_url": self._post_msg.id,
+            "is_template": self.is_template,
         }
 
         return ret
@@ -285,7 +291,9 @@ class Event(ManagedObject):
                 )
                 if post_message
                 else "`Not Posted Yet`"
-            ) + f"\n{U.draw_line(extra=17)}",
+            ) + f"\n{U.draw_line(extra=17)}" + (
+                f"\n**Is Template:** `{self.is_template}`"
+            ),
             footer_text=f"ID: {self.id}",
             thumbnail_url=self.image,
             fields=[
@@ -312,6 +320,77 @@ class Event(ManagedObject):
                     value=(
                           f"**[{sum(len(v) for v in self.elements.values())}]** "
                           "element(s) attached to this event."
+                    ) + f"\n{U.draw_line(extra=25)}",
+                    inline=False
+                )
+            ] + [await p.event_field() for p in self.positions]
+        )
+
+################################################################################
+    async def template_status(self) -> Embed:
+
+        start_time = (
+            U.format_dt(self.start_time, "t")
+            if self.start_time
+            else "`Not Set`"
+        )
+        end_time = (
+            U.format_dt(self.end_time, "t")
+            if self.end_time
+            else "`Not Set`"
+        )
+
+        pos_list = "\n* ".join(
+            [
+                f"{pos.emoji if pos.emoji else ''} {pos.position.name} - {pos.quantity}x"
+                for pos in self.positions
+            ]
+        ) if self.positions else "`No Positions Selected Yet`"
+
+        shift_value = "`No Shift Brackets Set Up`"
+        if self.shifts:
+            shift_value = "* " + "\n* ".join(
+                [
+                    f"{U.format_dt(s.start_time, 't')} - "
+                    f"{(U.format_dt(s.end_time, 't'))}" for s in self.shifts
+                ]
+            )
+
+        shift_emoji = BotEmojis.Check if self.is_fully_covered() else BotEmojis.Cross
+        shift_coverage_str = (
+            "`Shifts Match Event Time`"
+            if self.is_fully_covered()
+            else "`Missing Shift Time(s)`"
+        )
+
+        return U.make_embed(
+            title=f"__{self.name}__",
+            footer_text=f"ID: {self.id}",
+            thumbnail_url=self.image,
+            fields=[
+                EmbedField(
+                    name="__Event Hours__",
+                    value=f"{start_time} - {end_time}",
+                    inline=False
+                ),
+                EmbedField(
+                    name="__Shift Brackets__",
+                    value=(
+                        f"{str(shift_emoji)} {shift_coverage_str} {str(shift_emoji)}\n"
+                        f"{shift_value}"
+                    ),
+                    inline=False
+                ),
+                EmbedField(
+                    name="__Positions Required__",
+                    value=pos_list,
+                    inline=False
+                ),
+                EmbedField(
+                    name="__Secondary Elements__",
+                    value=(
+                        f"**[{sum(len(v) for v in self.elements.values())}]** "
+                        "element(s) attached to this event."
                     ) + f"\n{U.draw_line(extra=25)}",
                     inline=False
                 )
@@ -975,14 +1054,20 @@ class Event(ManagedObject):
         await self._details.secondary_element_menu(interaction)
 
 ################################################################################
-    async def make_template(self, interaction: Interaction) -> None:
+    async def mark_template(self, interaction: Interaction) -> None:
 
-        await self._mgr.add_template(interaction, self)  # type: ignore
+        self.is_template = not self.is_template
+        await interaction.respond("** **", delete_after=0.1)
 
 ################################################################################
     async def page(self) -> Page:
 
         return Page(embeds=[await self.status()], custom_view=EventListView(self))
+
+################################################################################
+    async def template_page(self) -> Page:
+
+        return Page(embeds=[await self.template_status()], custom_view=EventTemplateView(self))
 
 ################################################################################
     async def staff_member_status(self) -> Embed:
@@ -1038,7 +1123,7 @@ class Event(ManagedObject):
 
         available_shifts = []
         for pos in self.positions:
-            if pos.position.id == position.id:
+            if pos.position.id == position.position.id:
                 available_shifts = pos.get_available_shifts()
                 break
 

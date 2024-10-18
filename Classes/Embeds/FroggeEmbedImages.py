@@ -100,18 +100,18 @@ class FroggeEmbedImages:
             title="Embed Images",
             fields=[
                 EmbedField(
-                    name="__Main Image__",
-                    value=(
-                        f"{BotEmojis.ArrowDown}{BotEmojis.ArrowDown}{BotEmojis.ArrowDown}\n"
-                        if self.main_image
-                        else "`Not Set`"
-                    )
-                ),
-                EmbedField(
                     name="__Thumbnail Image__",
                     value=(
                         f"{BotEmojis.ArrowRight}{BotEmojis.ArrowRight}{BotEmojis.ArrowRight}\n"
                         if self.thumbnail
+                        else "`Not Set`"
+                    )
+                ),
+                EmbedField(
+                    name="__Main Image__",
+                    value=(
+                        f"{BotEmojis.ArrowDown}{BotEmojis.ArrowDown}{BotEmojis.ArrowDown}\n"
+                        if self.main_image
                         else "`Not Set`"
                     )
                 ),

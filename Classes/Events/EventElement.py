@@ -64,16 +64,14 @@ class EventElement(Identifiable):
 
 ################################################################################
     @classmethod
-    def from_template(cls: Type[EE], parent: Event, other: TemplateSecondary) -> EE:
+    def copy(cls: Type[EE], parent: Event, other: EventElement) -> EE:
 
-        new_data = parent.bot.api.create_event_element(parent.id, other.message_type.value)
-        return cls(
-            parent=parent,
-            _id=new_data["id"],
-            type=other.message_type,
-            title=other.title,
-            value=other.value
-        )
+        new_element = cls.new(parent, other.type)
+
+        new_element.title = other.title
+        new_element.value = other.value
+
+        return new_element
 
 ################################################################################
     @property

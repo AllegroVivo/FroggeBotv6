@@ -54,7 +54,7 @@ class SubmitApplicationButton(FroggeButton):
         
         super().__init__(
             style=ButtonStyle.primary,
-            label="Submit Application",
+            label="Submit Form",
             disabled=False,
             row=0,
             emoji=BotEmojis.FlyingEnvelope

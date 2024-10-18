@@ -61,7 +61,7 @@ class MessageBuilder(ObjectManager):
     @property
     def all_symbols(self) -> List[SymbolItem]:
 
-        return [symbol for symbol_set in self._symbols for symbol in symbol_set.items]
+        return [sym for symbol_set in self._symbols for sym in symbol_set.items]
 
 ################################################################################
     @property

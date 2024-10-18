@@ -15,10 +15,9 @@ from UI.Events import (
 )
 from logger import log
 from UI.Common import BasicTextModal, InstructionsInfo, ConfirmCancelView
-from .EventTemplate import EventTemplate
 
 if TYPE_CHECKING:
-    from Classes import GuildData
+    from Classes import GuildData, Position
     from UI.Common import FroggeView
 ################################################################################
 
@@ -39,7 +38,6 @@ class EventManager(ObjectManager):
         super().__init__(state)
 
         self._lockout: int = 0
-        self._templates: List[EventTemplate] = []
         self._channel: LazyChannel = LazyChannel(self, None)
 
 ################################################################################
@@ -47,8 +45,6 @@ class EventManager(ObjectManager):
 
         self._lockout = payload["event_lockout"]
         self._managed = [Event.load(self, e) for e in payload["events"]]
-        # self._templates = [EventTemplate.load(self, t) for t in payload["templates"]]
-        self._templates = []
         self._channel = LazyChannel(self, payload["channel_id"])
 
         for event in self._managed:
@@ -74,9 +70,9 @@ class EventManager(ObjectManager):
 
 ################################################################################
     @property
-    def templates(self) -> List[EventTemplate]:
+    def templates(self) -> List[Event]:
 
-        return self._templates
+        return [e for e in self._managed if e.is_template]  # type: ignore
 
 ################################################################################
     @property
@@ -264,7 +260,8 @@ class EventManager(ObjectManager):
         if event._post_msg.id is not None:
             try:
                 post_message = await event.post_message
-                await post_message.delete()
+                if post_message is not None:
+                    await post_message.delete()
             except NotFound:
                 pass
 
@@ -328,60 +325,32 @@ class EventManager(ObjectManager):
         self.channel = channel
 
 ################################################################################
-    async def add_template(self, interaction: Interaction, event: Event) -> None:
-
-        log.info(self.guild, "Adding Event Template")
-
-        prompt = U.make_embed(
-            title="__Add Event Template__",
-            description="Are you sure you want to add this event as a template?"
-        )
-        view = ConfirmCancelView(interaction.user)
-
-        await interaction.respond(embed=prompt, view=view)
-        await view.wait()
-
-        if not view.complete or view.value is False:
-            log.debug(self.guild, "Template Addition Cancelled")
-            return
-
-        inter = await interaction.respond("**[Adding Event as Template. Please wait...]**")
-
-        template = EventTemplate.from_event(self, event)
-        self._templates.append(template)
-
-        await inter.delete()
-        log.info(self.guild, f"Event Added as Template: {event.name}")
-
-        confirm = U.make_embed(
-            title="__Event Template Added__",
-            description=(
-                f"The event __**{event.name}**__ has been added as a template.\n\n"
-
-                "You can now use this template to create new events."
-            )
-        )
-        await interaction.respond(embed=confirm)
-
-################################################################################
     async def view_event_templates(self, interaction: Interaction) -> None:
 
         log.info(self.guild, "Displaying Event Templates")
 
-        pages = [template.page() for template in self.templates]
+        pages = [await event.template_page() for event in self.templates]
+        if not pages:
+            error = U.make_error(
+                title="No Templates Available",
+                message="There are no event templates available to display.",
+                solution="Please create a new template before proceeding."
+            )
+            await interaction.respond(embed=error, ephemeral=True)
+            return
 
         frogginator = EventListFrogginator(pages, self)
         await frogginator.respond(interaction)
 
 ################################################################################
-    def get_template(self, template_id: str) -> Optional[EventTemplate]:
+    def get_template(self, template_id: str) -> Optional[Event]:
 
         for template in self.templates:
             if template.id == template_id:
                 return template
 
 ################################################################################
-    async def create_event_from_template(self, interaction: Interaction, template: EventTemplate) -> None:
+    async def create_event_from_template(self, interaction: Interaction, template: Event) -> None:
 
         await interaction.response.defer(invisible=False)
 
@@ -390,5 +359,10 @@ class EventManager(ObjectManager):
         self.events.append(new_event)
 
         await new_event.menu(interaction)
+
+################################################################################
+    async def remove_position(self, position: Position) -> None:
+
+        pass
 
 ################################################################################

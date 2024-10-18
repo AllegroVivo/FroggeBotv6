@@ -8,7 +8,6 @@ from Classes.Common import Identifiable
 from .EventSignup import EventSignup
 from UI.Common import FroggeSelectView
 from Utilities import Utilities as U
-from .TemplatePosition import TemplatePosition
 
 if TYPE_CHECKING:
     from Classes import Event, Position, FroggeBot, ShiftBracket
@@ -67,15 +66,9 @@ class EventPosition(Identifiable):
 
 ################################################################################
     @classmethod
-    def from_template(cls: Type[EP], parent: Event, other: TemplatePosition) -> EP:
+    def copy(cls: Type[EP], parent: Event, other: EventPosition) -> EP:
 
-        new_data = parent.bot.api.create_event_position(parent.id, other.position.id, other.quantity)
-        return cls(
-            parent=parent,
-            _id=new_data["id"],
-            pos=parent.guild.position_manager[other.position_id],
-            quantity=other.quantity,
-        )
+        return cls.new(parent, other.position, other.quantity)
 
 ################################################################################
     @property

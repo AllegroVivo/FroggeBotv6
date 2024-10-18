@@ -12,7 +12,7 @@ from .StaffMember import StaffMember
 from Classes.Common import ObjectManager, LazyRole
 
 if TYPE_CHECKING:
-    from Classes import GuildData, Character
+    from Classes import GuildData, Character, Position
 ################################################################################
 
 __all__ = ("StaffManager",)
@@ -157,6 +157,19 @@ class StaffManager(ObjectManager):
 ################################################################################
     async def hire(self, interaction: Interaction, user: User) -> None:
 
+        current = self.get_staff_by_user_id(user.id)
+        if current is not None:
+            error = U.make_error(
+                title="User Already Registered",
+                message=f"{user.mention} is already registered as a staff member.",
+                solution=(
+                    "Please select another user or use this user's dashboard "
+                    "to edit their employment dates."
+                )
+            )
+            await interaction.respond(embed=error, ephemeral=True)
+            return
+
         confirm = U.make_embed(
             title="__Confirm Employee Add__",
             description=(
@@ -208,6 +221,11 @@ class StaffManager(ObjectManager):
         self._managed.append(member)
 
         await member.menu(interaction)
+
+################################################################################
+    def get_staff_by_user_id(self, user_id: int) -> Optional[StaffMember]:
+
+        return next((m for m in self._managed if m._user.id == user_id), None)
 
 ################################################################################
     async def modify_item(self, interaction: Interaction) -> None:
@@ -307,6 +325,17 @@ class StaffManager(ObjectManager):
             for m in self.staff
             if self.guild.position_manager[pos_id] in m.qualifications  # type: ignore
         ]
+
+################################################################################
+    async def remove_position(self, position: Position) -> None:
+
+        for staff in self.staff:
+            if position in staff.qualifications:
+                staff.qualifications.remove(position)
+                member = await self.guild.get_or_fetch_member(staff._user.id)
+                role = await position.role
+                if role is not None:
+                    await member.remove_roles(role)
 
 ################################################################################
 

@@ -14,6 +14,7 @@ from discord import (
     NotFound,
     Forbidden,
 )
+from discord.ext.pages import Page
 
 from Assets import BotEmojis
 from Classes.Activities import BaseActivity
@@ -409,5 +410,10 @@ class Giveaway(BaseActivity):
     def get_entry_by_user(self, user_id: int) -> Optional[GiveawayEntry]:
 
         return next((e for e in self.entries if e._user.id == int(user_id)), None)
+
+################################################################################
+    async def page(self) -> Page:
+
+        return Page(embeds=[await self.status()])
 
 ################################################################################

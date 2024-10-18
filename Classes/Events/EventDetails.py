@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import TYPE_CHECKING, Optional, List, Dict, Type, TypeVar, Any
 
 from discord import Interaction, Embed, EmbedField, SelectOption
@@ -76,7 +76,18 @@ class EventDetails:
 
 ################################################################################
     @classmethod
-    def from_template(cls: Type[ED], parent: Event, template: EventTemplate) -> ED:
+    def copy(cls: Type[ED], parent: Event, template: Event) -> ED:
+
+        if template.start_time and template.end_time:
+            year = datetime.now(UTC).year
+            start_day = end_day = datetime.now(UTC).day
+            if template.end_time.time() < template.start_time.time():
+                end_day += 1
+
+            start_time = template.start_time.replace(day=start_day, year=year)
+            end_time = template.end_time.replace(day=end_day, year=year)
+        else:
+            start_time = end_time = None
 
         self: ED = cls.__new__(cls)
 
@@ -84,11 +95,13 @@ class EventDetails:
 
         self._name = template.name
         self._description = template.description
-        self._start = template.start_time
-        self._end = template.end_time
-        self._image = template.image_url
+        self._start = start_time
+        self._end = end_time
+        self._image = template.image
 
         self._elements = {}
+        for element in template._details.elements.items():
+            self._elements[element[0]] = [EventElement.copy(parent, e) for e in element[1]]
 
         return self
 
