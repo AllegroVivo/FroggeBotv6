@@ -75,9 +75,6 @@ class VIPPerksManager:
             await interaction.respond(embed=error, ephemeral=True)
             return
 
-        new_perk = VIPPerk.new(self)
-        self._perks.append(new_perk)
-
         modal = BasicTextModal(
             title="VIP Perk Text",
             attribute="Text",
@@ -90,6 +87,9 @@ class VIPPerksManager:
 
         if not modal.complete:
             return
+
+        new_perk = VIPPerk.new(self)
+        self._perks.append(new_perk)
         
         new_perk.text = modal.value
         await new_perk.menu(interaction)
