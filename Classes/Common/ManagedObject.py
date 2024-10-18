@@ -115,7 +115,7 @@ class ManagedObject(Identifiable, FroggeObject):
         await interaction.respond(embed=prompt, view=view)
         await view.wait()
         
-        if not view.complete or not view.value:
+        if not view.complete or view.value is False:
             log.debug(self.guild, f"{type_name} removal cancelled.")
             return
         

@@ -149,7 +149,7 @@ class VIPPerk:
     def select_option(self) -> SelectOption:
 
         return SelectOption(
-            label=self.text,
+            label=self.text or "No Name",
             value=str(self.id),
             description=(
                 self.description
