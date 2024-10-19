@@ -121,7 +121,7 @@ class GuildConfiguration(FroggeObject):
 ################################################################################
     async def main_menu(self, interaction: Interaction) -> None:
 
-        # Prompt for password if on a restricted server
+        # Prompt for password if on a restricted server (FROG)
         if interaction.guild_id in self.RESTRICTED_SERVERS:
             load_dotenv()
             if os.getenv("DEBUG") != "True":
