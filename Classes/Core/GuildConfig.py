@@ -139,10 +139,7 @@ class GuildConfiguration(FroggeObject):
                     return
 
                 if modal.value != os.getenv("ADMIN_PASSWORD"):
-                    await interaction.response.send_message(
-                        "Incorrect password. Please try again.",
-                        ephemeral=True
-                    )
+                    await interaction.respond("Incorrect password. Please try again.", ephemeral=True)
                     return
 
         embed = await self.status()
