@@ -18,7 +18,7 @@ from .ReactionRole import ReactionRole
 from Utilities import Utilities as U, FroggeColor
 from Errors import MaxItemsReached
 from UI.ReactionRoles.Views import ReactionRoleMessageStatusView, ReactionRoleView
-from UI.Common import BasicTextModal, FroggeSelectView, ConfirmCancelView
+from UI.Common import BasicTextModal, FroggeSelectView, ConfirmCancelView, CloseMessageView
 from Enums import ReactionRoleMessageType
 
 if TYPE_CHECKING:
@@ -450,7 +450,10 @@ class ReactionRoleMessage(ManagedObject):
                 f"**[Jump to Message]({self._post_msg.id})**"
             )
         )
-        await interaction.respond(embed=success)
+        view = CloseMessageView(interaction.user)
+
+        await interaction.respond(embed=success, view=view)
+        await view.wait()
 
 ################################################################################
     async def update_post_components(self) -> bool:
