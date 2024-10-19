@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, List, Optional, Union, Dict
 
 from discord import (
@@ -8,15 +10,16 @@ from discord import (
     Embed,
     EmbedField,
     TextChannel,
-    ForumChannel, ChannelType
+    ForumChannel, ChannelType, SelectOption
 )
 
 from Classes.Common import ObjectManager, LazyChannel
 from Errors import MaxItemsReached
-from UI.Common import FroggeSelectView
+from UI.Common import FroggeSelectView, ConfirmCancelView
 from UI.ReactionRoles import ReactionRoleManagerMenuView
-from Utilities import Utilities as U
+from Utilities import Utilities as U, FroggeColor
 from .ReactionRoleMessage import ReactionRoleMessage
+from .ReactionRoleTemplate import ReactionRoleTemplate
 
 if TYPE_CHECKING:
     from Classes import GuildData
@@ -30,6 +33,7 @@ class ReactionRoleManager(ObjectManager):
 
     __slots__ = (
         "_channel",
+        "_templates",
     )
     
 ################################################################################
@@ -38,6 +42,11 @@ class ReactionRoleManager(ObjectManager):
         super().__init__(state)
 
         self._channel: LazyChannel = LazyChannel(self, None)
+        self._templates: List[ReactionRoleTemplate] = []
+
+        for json_file in Path(f"Classes/ReactionRoles/Templates").glob('*.json'):
+            with json_file.open('r', encoding='utf-8') as file:
+                self._templates.append(ReactionRoleTemplate(json.load(file)))
     
 ################################################################################
     async def load_all(self, payload: Dict[str, Any]) -> None:
@@ -114,10 +123,95 @@ class ReactionRoleManager(ObjectManager):
             await interaction.respond(embed=error, ephemeral=True)
             return
 
+        options = [
+            SelectOption(label="Blank Message", value="blank"),
+            SelectOption(label="Templated Message", value="template")
+        ]
+        prompt = U.make_embed(
+            title="__Add Reaction Role__",
+            description=(
+                "Would you like to add a blank reaction role message or create "
+                "one from a template of pre-existing options?"
+            )
+        )
+        view = FroggeSelectView(interaction.user, options)
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        if view.value == "template":
+            await self._create_new_role_from_template(interaction)
+            return
+
         new_role = ReactionRoleMessage.new(self)
         self._managed.append(new_role)  # type: ignore
 
         await new_role.menu(interaction)
+        return
+
+################################################################################
+    async def _create_new_role_from_template(self, interaction: Interaction) -> None:
+
+        prompt = U.make_embed(
+            title="__Create Reaction Role from Template__",
+            description=(
+                "Please select the template you would like to use for the new reaction roles."
+            )
+        )
+        view = FroggeSelectView(interaction.user, [t.select_option() for t in self._templates])
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        template = next(t for t in self._templates if t.name == view.value)
+
+        confirm = U.make_embed(
+            title=f"__Create `{template.name}` Reaction Roles__",
+            description=(
+                f"Would you like to create a new reaction role message using "
+                f"the `{template.name}` template?"
+            )
+        )
+        view = ConfirmCancelView(interaction.user, return_interaction=True)
+
+        await interaction.respond(embed=confirm, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        _, inter = view.value
+        await inter.response.defer(invisible=False)
+
+        new_roles = []
+        for template_role in template.roles:
+            new_roles.append(
+                await self.guild.parent.create_role(
+                    name=template_role.name,
+                    color=FroggeColor(int(template_role.color.lstrip("#"), 16))
+                )
+            )
+
+        new_reaction_role = ReactionRoleMessage.new(self)
+        self._managed.append(new_reaction_role)  # type: ignore
+
+        new_reaction_role._title = template.title
+        new_reaction_role._description = template.description
+        new_reaction_role._thumbnail = template.thumbnail
+        new_reaction_role._type_param = template.type.value
+        new_reaction_role.update()
+
+        for role in new_roles:
+            new_reaction_role.add_role_from_role(role, template)
+
+        await inter.followup.send("** **", delete_after=0.1)
+        await new_reaction_role.menu(interaction)
 
 ################################################################################
     async def modify_item(self, interaction: Interaction) -> None:

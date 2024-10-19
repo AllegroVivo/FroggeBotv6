@@ -10,7 +10,8 @@ from discord import (
     Interaction,
     SelectOption,
     User,
-    NotFound
+    NotFound,
+    Role
 )
 
 from Classes.Common import ManagedObject, LazyMessage
@@ -22,7 +23,7 @@ from UI.Common import BasicTextModal, FroggeSelectView, ConfirmCancelView, Close
 from Enums import ReactionRoleMessageType
 
 if TYPE_CHECKING:
-    from Classes import ReactionRoleManager, FroggeBot, GuildData
+    from Classes import ReactionRoleManager, FroggeBot, GuildData, ReactionRoleTemplate
     from UI.Common import FroggeView
 ################################################################################
 
@@ -489,5 +490,25 @@ class ReactionRoleMessage(ManagedObject):
             return
 
         self.message_type = ReactionRoleMessageType(int(view.value))
+
+################################################################################
+    def add_role_from_role(self, role: Role, template: ReactionRoleTemplate) -> ReactionRole:
+
+        assert role is not None, "Role cannot be None"
+
+        emoji = None
+        for r in template.roles:
+            if r.name == role.name:
+                emoji = r.emoji
+
+        new_role = ReactionRole.new(self)
+        new_role.role = role
+        new_role.label = role.name
+        new_role.emoji = emoji
+        new_role.update()
+
+        self._roles.append(new_role)
+
+        return new_role
 
 ################################################################################

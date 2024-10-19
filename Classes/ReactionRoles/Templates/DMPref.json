@@ -1,0 +1,24 @@
+{
+  "name": "DM Preference",
+  "title": "Can Other Users DM You Privately?",
+  "description": null,
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1297043564026400830/10069151.png",
+  "type": 2,
+  "roles": [
+    {
+      "name": "DMs Open",
+      "color": "#17A95F",
+      "emoji": "☑️"
+    },
+    {
+      "name": "DMs Closed",
+      "color": "#BE5382",
+      "emoji": "❌"
+    },
+    {
+      "name": "Please Ask to DM ♥",
+      "color": "#E4B271",
+      "emoji": "🤔"
+    }
+  ]
+}

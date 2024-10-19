@@ -1,0 +1,29 @@
+{
+  "name": "Pronouns",
+  "title": "Please Select Your Pronouns",
+  "description": "Let us know your pronouns so we can address you correctly!",
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1297012232592293909/Pronoun-Icon-Large-with-Text-2000x1238.png",
+  "type": 2,
+  "roles": [
+    {
+      "name": "He/Him",
+      "color": "#4998DA",
+      "emoji": "👨"
+    },
+    {
+      "name": "She/Her",
+      "color": "#E00560",
+      "emoji": "👩"
+    },
+    {
+      "name": "They/Them",
+      "color": "#DE7C20",
+      "emoji": "👥"
+    },
+    {
+      "name": "Please Ask My Pronouns ♥",
+      "color": "#9856B5",
+      "emoji": "❓"
+    }
+  ]
+}
