@@ -201,21 +201,13 @@ class Admin(Cog):
 
 ################################################################################
     @admin.command(
-        name="parse",
-        description="Parse a message for FFXIV Symbol Markdowns."
+        name="glyph_builder",
+        description="Build a PF message interactively."
     )
-    async def parse_message(
-        self,
-        ctx: ApplicationContext,
-        message: Option(
-            SlashCommandOptionType.string,
-            name="message",
-            description="The message to parse.",
-            required=True
-        )
-    ) -> None:
+    async def build_pf_message(self, ctx: ApplicationContext) -> None:
 
-        await ctx.respond(f"```{IconMap().parse_markdown(message)}```")
+        guild = self.bot[ctx.guild_id]
+        await guild.message_builder.main_menu(ctx.interaction)
 
 ################################################################################
 def setup(bot: "FroggeBot") -> None:

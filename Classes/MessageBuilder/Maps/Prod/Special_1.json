@@ -1,0 +1,110 @@
+{
+  "name": "Special Glyphs 1",
+  "items": [
+    {
+      "id": 72,
+      "name": "Curve Arrow Left",
+      "unicode": "",
+      "emoji": "<:LCurvedArrow:1295515696318513162>",
+      "button_row": 0
+    },
+    {
+      "id": 73,
+      "name": "Curve Arrow Right",
+      "unicode": "",
+      "emoji": "<:RCurvedArrow:1295515728127983707>",
+      "button_row": 0
+    },
+    {
+      "id": 74,
+      "name": "Sprout",
+      "unicode": "",
+      "emoji": "<:Sprout:1295515869316911176>",
+      "button_row": 0
+    },
+    {
+      "id": 75,
+      "name": "Star",
+      "unicode": "",
+      "emoji": "<:Star:1295515957309083720>",
+      "button_row": 0
+    },
+    {
+      "id": 76,
+      "name": "Collectible",
+      "unicode": "",
+      "emoji": "<:Collectible:1295515990771236875>",
+      "button_row": 0
+    },
+    {
+      "id": 77,
+      "name": "Clock",
+      "unicode": "",
+      "emoji": "<:Clock:1295516029635526726>",
+      "button_row": 1
+    },
+    {
+      "id": 78,
+      "name": "Hydaelyn",
+      "unicode": "",
+      "emoji": "<:Hyadelyn:1295516063974297690>",
+      "button_row": 1
+    },
+    {
+      "id": 79,
+      "name": "Chains",
+      "unicode": "",
+      "emoji": "<:Chains:1295516096845058078>",
+      "button_row": 1
+    },
+    {
+      "id": 80,
+      "name": "Left Bracket",
+      "unicode": "",
+      "emoji": "<:LBracket:1295516135797817465>",
+      "button_row": 1
+    },
+    {
+      "id": 81,
+      "name": "Right Bracket",
+      "unicode": "",
+      "emoji": "<:Rbracket:1295516173630443530>",
+      "button_row": 1
+    },
+    {
+      "id": 82,
+      "name": "Prohibited",
+      "unicode": "",
+      "emoji": "<:Prohibited:1295516208434516079>",
+      "button_row": 2
+    },
+    {
+      "id": 83,
+      "name": "Die Marker",
+      "unicode": "",
+      "emoji": "<:Dice:1295516262797017108>",
+      "button_row": 2
+    },
+    {
+      "id": 84,
+      "name": "X Pointer",
+      "unicode": "",
+      "emoji": "<:XPointer:1295516295990870036>",
+      "button_row": 2
+    },
+    {
+      "id": 85,
+      "name": "O Pointer",
+      "unicode": "",
+      "emoji": "<:OPointer:1295516352630755378>",
+      "button_row": 2
+    },
+    {
+      "id": 86,
+      "name": "Flower",
+      "unicode": "",
+      "emoji": "<:Flower:1295516413414342699>",
+      "button_row": 2
+    }
+  ]
+}

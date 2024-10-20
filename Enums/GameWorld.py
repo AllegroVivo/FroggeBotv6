@@ -90,6 +90,10 @@ class GameWorld(FroggeEnum):
     Valefor = 79
     Yojimbo = 80
     Zeromus = 81
+    Cuchulainn = 82
+    Golem = 83
+    Kraken = 84
+    Rafflesia = 85
 
 ################################################################################
     @classmethod
@@ -140,9 +144,13 @@ class GameWorld(FroggeEnum):
             ]
         elif dc.value == 3:  # Dynamis
             world_list = [
+                GameWorld.Cuchulainn,
+                GameWorld.Golem,
                 GameWorld.Halicarnassus,
+                GameWorld.Kraken,
                 GameWorld.Maduin,
                 GameWorld.Marilith,
+                GameWorld.Rafflesia,
                 GameWorld.Seraph,
             ]
         elif dc.value == 4:  # Primal

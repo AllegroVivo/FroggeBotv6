@@ -1,0 +1,103 @@
+{
+  "name": "Unicode Box Drawing",
+  "items": [
+    {
+      "id": 0,
+      "name": "Horizontal",
+      "unicode": "━",
+      "emoji": "<:HorizontalLine:1294359355222655037>",
+      "button_row": 0
+    },
+    {
+      "id": 1,
+      "name": "Vertical",
+      "unicode": "┃",
+      "emoji": "<:VerticalLine:1294359547254935593>",
+      "button_row": 0
+    },
+    {
+      "id": 2,
+      "name": "Down and Right",
+      "unicode": "┏",
+      "emoji": "<:RightAndDown:1294359398235508837>",
+      "button_row": 0
+    },
+    {
+      "id": 3,
+      "name": "Down and Left",
+      "unicode": "┓",
+      "emoji": "<:LeftAndDown:1294359375573553174>",
+      "button_row": 0
+    },
+    {
+      "id": 4,
+      "name": "Up and Right",
+      "unicode": "┗",
+      "emoji": "<:UpAndRight:1294359444267860020>",
+      "button_row": 0
+    },
+    {
+      "id": 5,
+      "name": "Up and Left",
+      "unicode": "┛",
+      "emoji": "<:UpAndLeft:1294359420339490948>",
+      "button_row": 1
+    },
+    {
+      "id": 6,
+      "name": "Vertical and Right",
+      "unicode": "┣",
+      "emoji": "<:VerticalAndRight:1294359529584070696>",
+      "button_row": 1
+    },
+    {
+      "id": 7,
+      "name": "Vertical and Left",
+      "unicode": "┫",
+      "emoji": "<:VerticalAndLeft:1294359503659339908>",
+      "button_row": 1
+    },
+    {
+      "id": 8,
+      "name": "Down and Horizontal",
+      "unicode": "┳",
+      "emoji": "<:HorizontalAndDown:1294359309232373840>",
+      "button_row": 1
+    },
+    {
+      "id": 9,
+      "name": "Up and Horizontal",
+      "unicode": "┻",
+      "emoji": "<:HorizontalAndUp:1294359332628074516>",
+      "button_row": 1
+    },
+    {
+      "id": 10,
+      "name": "Vertical and Horizontal",
+      "unicode": "╋",
+      "emoji": "<:VerticalAndHorizontal:1294359478602432674>",
+      "button_row": 2
+    },
+    {
+      "id": 11,
+      "name": "Upper Right to Lower Left",
+      "unicode": "╱",
+      "emoji": "<:DiagonalRightToLeft:1294359268530589777>",
+      "button_row": 2
+    },
+    {
+      "id": 12,
+      "name": "Upper Left to Lower Right",
+      "unicode": "╲",
+      "emoji": "<:DiagonalLeftToRight:1294359238562418698>",
+      "button_row": 2
+    },
+    {
+      "id": 13,
+      "name": "Diagonal Cross",
+      "unicode": "╳",
+      "emoji": "<:DiagonalCross:1294359202046677042>",
+      "button_row": 2
+    }
+  ]
+}

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
-from discord import Guild, NotFound, Role, Member, User, Emoji, Message
+from discord import Guild, NotFound, Role, Member, User, Emoji, Message, Interaction
 from discord.abc import GuildChannel
 
 from .GuildConfig import GuildConfiguration
@@ -19,6 +19,8 @@ from Classes.ReactionRoles.ReactionRoleManager import ReactionRoleManager
 from Classes.Rooms.RoomsManager import RoomsManager
 from Classes.Embeds.EmbedManager import EmbedManager
 from Classes.Finances.FinanceManager import FinanceManager
+from Classes.TimeClock.PunchManager import PunchManager
+from Classes.MessageBuilder.MessageBuilder import MessageBuilder
 
 from logger import log
 
@@ -48,6 +50,8 @@ class GuildData:
         "_rooms_mgr",
         "_embed_mgr",
         "_finance_mgr",
+        "_punch_mgr",
+        "_msg_builder",
     )
 
 ################################################################################
@@ -71,6 +75,8 @@ class GuildData:
         self._rooms_mgr: RoomsManager = RoomsManager(self)
         self._embed_mgr: EmbedManager = EmbedManager(self)
         self._finance_mgr: FinanceManager = FinanceManager(self)
+        self._punch_mgr: PunchManager = PunchManager(self)
+        self._msg_builder: MessageBuilder = MessageBuilder(self)
 
 ################################################################################
     async def load_all(self, payload: Dict[str, Any]) -> None:
@@ -88,6 +94,7 @@ class GuildData:
         await self._rooms_mgr.load_all(payload["rooms"])
         await self._embed_mgr.load_all(payload["embeds"])
         await self._finance_mgr.load_all(payload["finances"])
+        await self._msg_builder.load_all(payload["messages"])
 
 ################################################################################
     @property
@@ -198,6 +205,18 @@ class GuildData:
         return self._finance_mgr
 
 ###############################################################################
+    @property
+    def punch_manager(self) -> PunchManager:
+
+        return self._punch_mgr
+
+###############################################################################
+    @property
+    def message_builder(self) -> MessageBuilder:
+
+        return self._msg_builder
+
+###############################################################################
     async def get_or_fetch_channel(self, channel_id: Optional[int]) -> Optional[GuildChannel]:
         
         log.debug(self, f"Fetching Channel: {channel_id}")
@@ -306,5 +325,11 @@ class GuildData:
                 return await channel.fetch_message(int(url_parts[-1]))  # type: ignore
             except NotFound:
                 return
-        
+
+################################################################################
+    async def process_employee_punch_in(self, interaction: Interaction) -> None:
+
+        if self.event_manager.current_event is not None:
+            await self.event_manager.current_event.process_employee_punch(interaction)
+
 ################################################################################

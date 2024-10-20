@@ -1,0 +1,110 @@
+{
+  "name": "Special Glyphs 3",
+  "items": [
+    {
+      "id": 102,
+      "name": "Boxed LT",
+      "unicode": "",
+      "emoji": "<:BoxedLT:1295518347722752020>",
+      "button_row": 0
+    },
+    {
+      "id": 103,
+      "name": "Boxed ST",
+      "unicode": "",
+      "emoji": "<:BoxedST:1295518581647474688>",
+      "button_row": 0
+    },
+    {
+      "id": 104,
+      "name": "Boxed ET",
+      "unicode": "",
+      "emoji": "<:BoxedET:1295518619341557822>",
+      "button_row": 0
+    },
+    {
+      "id": 105,
+      "name": "Boxed OZ",
+      "unicode": "",
+      "emoji": "<:BoxedOZ:1295518646873100448>",
+      "button_row": 0
+    },
+    {
+      "id": 106,
+      "name": "Boxed SZ",
+      "unicode": "",
+      "emoji": "<:BoxedSZ:1295518679747792957>",
+      "button_row": 0
+    },
+    {
+      "id": 107,
+      "name": "Boxed EZ",
+      "unicode": "",
+      "emoji": "<:BoxedEZ:1295518713797152791>",
+      "button_row": 1
+    },
+    {
+      "id": 108,
+      "name": "Boxed HL",
+      "unicode": "",
+      "emoji": "<:BoxedHL:1295518751021727764>",
+      "button_row": 1
+    },
+    {
+      "id": 109,
+      "name": "Boxed HS",
+      "unicode": "",
+      "emoji": "<:BoxedHS:1295518778628636765>",
+      "button_row": 1
+    },
+    {
+      "id": 110,
+      "name": "Boxed HE",
+      "unicode": "",
+      "emoji": "<:BoxedHE:1295518812573007914>",
+      "button_row": 1
+    },
+    {
+      "id": 111,
+      "name": "Fancy S",
+      "unicode": "",
+      "emoji": "<:FancyS:1295518854361120779>",
+      "button_row": 1
+    },
+    {
+      "id": 112,
+      "name": "Dots",
+      "unicode": "",
+      "emoji": "<:Dots:1295518889354072115>",
+      "button_row": 2
+    },
+    {
+      "id": 113,
+      "name": "Hex Dots",
+      "unicode": "",
+      "emoji": "<:HexDots:1295518921738289192>",
+      "button_row": 2
+    },
+    {
+      "id": 114,
+      "name": "Shield",
+      "unicode": "",
+      "emoji": "<:Shield:1295518954332225577>",
+      "button_row": 2
+    },
+    {
+      "id": 115,
+      "name": "Loop",
+      "unicode": "",
+      "emoji": "<:Loop:1295518992361979924>",
+      "button_row": 2
+    },
+    {
+      "id": 116,
+      "name": "Fancy X",
+      "unicode": "",
+      "emoji": "<:FancyX:1295519024721035306>",
+      "button_row": 2
+    }
+  ]
+}

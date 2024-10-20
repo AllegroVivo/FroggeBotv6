@@ -1,0 +1,69 @@
+{
+  "name": "Zodiac Signs",
+  "title": "Please Select Your Zodiac Sign",
+  "description": "Get to know your fellow members better by sharing your zodiac sign!",
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1297042514783768678/zodiac-circle-with-horoscope-signs-thin-line-vector-18419428.jpg",
+  "type": 2,
+  "roles": [
+    {
+      "name": "Aries",
+      "color": "#9856B4",
+      "emoji": "♈"
+    },
+    {
+      "name": "Taurus",
+      "color": "#9856B4",
+      "emoji": "♉"
+    },
+    {
+      "name": "Gemini",
+      "color": "#9856B4",
+      "emoji": "♊"
+    },
+    {
+      "name": "Cancer",
+      "color": "#9856B4",
+      "emoji": "♋"
+    },
+    {
+      "name": "Leo",
+      "color": "#9856B4",
+      "emoji": "♌"
+    },
+    {
+      "name": "Virgo",
+      "color": "#9856B4",
+      "emoji": "♍"
+    },
+    {
+      "name": "Libra",
+      "color": "#9856B4",
+      "emoji": "♎"
+    },
+    {
+      "name": "Scorpio",
+      "color": "#9856B4",
+      "emoji": "♏"
+    },
+    {
+      "name": "Sagittarius",
+      "color": "#9856B4",
+      "emoji": "♐"
+    },
+    {
+      "name": "Capricorn",
+      "color": "#9856B4",
+      "emoji": "♑"
+    },
+    {
+      "name": "Aquarius",
+      "color": "#9856B4",
+      "emoji": "♒"
+    },
+    {
+      "name": "Pisces",
+      "color": "#9856B4",
+      "emoji": "♓"
+    }
+  ]
+}

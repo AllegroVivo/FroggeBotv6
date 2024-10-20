@@ -214,14 +214,14 @@ class MakeTemplateButton(FroggeButton):
         
         super().__init__(
             style=ButtonStyle.secondary,
-            label="Make Into Template",
+            label="Toggle Template",
             disabled=False,
             row=2,
             emoji=BotEmojis.Star
         )
         
     async def callback(self, interaction: Interaction):
-        await self.view.ctx.make_template(interaction)
+        await self.view.ctx.mark_template(interaction)
         await self.view.edit_message_helper(
             interaction, embed=await self.view.ctx.status(), view=self.view
         )

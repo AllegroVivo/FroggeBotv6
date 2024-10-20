@@ -1,0 +1,24 @@
+{
+  "name": "Gaming Platform",
+  "title": "How Do You Play FFXIV?",
+  "description": null,
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1297043564026400830/10069151.png",
+  "type": 1,
+  "roles": [
+    {
+      "name": "PC",
+      "color": "#E00560",
+      "emoji": "🖥️"
+    },
+    {
+      "name": "PlayStation",
+      "color": "#4998DA",
+      "emoji": "🎮"
+    },
+    {
+      "name": "Xbox",
+      "color": "#15AB24",
+      "emoji": "🕹️"
+    }
+  ]
+}

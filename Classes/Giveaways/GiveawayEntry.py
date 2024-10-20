@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Type, Tuple, Any, TypeVar, Dict
 from discord import User, NotFound, Forbidden
 
 from Classes.Activities import ActivityEntry
+from Utilities import Utilities as U
 
 if TYPE_CHECKING:
     from Classes import Giveaway

@@ -64,7 +64,7 @@ class ActivityManager(ObjectManager, ABC):
 ################################################################################
     async def paginate_items(self, interaction: Interaction) -> None:
         
-        pages = [item.page() for item in self.active_items]
+        pages = [await item.page() for item in self.active_items]
         if not pages:
             pages.append(
                 Page(

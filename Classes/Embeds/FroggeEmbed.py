@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime, UTC
 from typing import TYPE_CHECKING, Optional, List, Any, Type, TypeVar, Dict
 
-from discord import User, Embed, EmbedField, PartialEmoji, SelectOption, Interaction
+from discord import User, Embed, EmbedField, PartialEmoji, SelectOption, Interaction, ChannelType
 
 from Assets import BotEmojis, BotImages
 from Classes.Common import ManagedObject
@@ -446,5 +446,30 @@ class FroggeEmbed(ManagedObject):
     async def images_menu(self, interaction: Interaction) -> None:
 
         await self.images.menu(interaction)
+
+################################################################################
+    async def post(self, interaction: Interaction) -> None:
+
+        prompt = U.make_embed(
+            title="__Post Embed__",
+            description=(
+                "Please enter the channel you want to post this embed to."
+            )
+        )
+        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel, [ChannelType.text])
+        if channel is None:
+            return
+
+        msg = await channel.send(embed=self.compile())
+
+        confirm = U.make_embed(
+            title="__Embed Posted__",
+            description=(
+                "Your embed has been successfully posted.\n\n"
+                
+                f"**[Jump to Message]({msg.jump_url})**"
+            )
+        )
+        await interaction.respond(embed=confirm)
 
 ################################################################################

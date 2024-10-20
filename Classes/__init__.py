@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .Finances import *
     from .Forms import *
     from .Giveaways import *
+    from .MessageBuilder import *
     from .Positions import *
     from .Profiles import *
     from .Raffles import *

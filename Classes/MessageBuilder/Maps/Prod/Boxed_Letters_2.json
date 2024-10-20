@@ -1,0 +1,96 @@
+{
+  "name": "Boxed Letters 2",
+  "items": [
+    {
+      "id": 13,
+      "name": "Boxed Letter N",
+      "unicode": "",
+      "emoji": "<:BoxedLetterN:1295507746610741258>",
+      "button_row": 0
+    },
+    {
+      "id": 14,
+      "name": "Boxed Letter O",
+      "unicode": "",
+      "emoji": "<:BoxedLetterO:1295507759826997248>",
+      "button_row": 0
+    },
+    {
+      "id": 15,
+      "name": "Boxed Letter P",
+      "unicode": "",
+      "emoji": "<:BoxedLetterP:1295507822481641492>",
+      "button_row": 0
+    },
+    {
+      "id": 16,
+      "name": "Boxed Letter Q",
+      "unicode": "",
+      "emoji": "<:BoxedLetterQ:1295507862822326433>",
+      "button_row": 0
+    },
+    {
+      "id": 17,
+      "name": "Boxed Letter R",
+      "unicode": "",
+      "emoji": "<:BoxedLetterR:1295507890907381834>",
+      "button_row": 0
+    },
+    {
+      "id": 18,
+      "name": "Boxed Letter S",
+      "unicode": "",
+      "emoji": "<:BoxedLetterS:1295507938835693728>",
+      "button_row": 1
+    },
+    {
+      "id": 19,
+      "name": "Boxed Letter T",
+      "unicode": "",
+      "emoji": "<:BoxedLetterT:1295507981353357372>",
+      "button_row": 1
+    },
+    {
+      "id": 20,
+      "name": "Boxed Letter U",
+      "unicode": "",
+      "emoji": "<:BoxedLetterU:1295508022067593287>",
+      "button_row": 1
+    },
+    {
+      "id": 21,
+      "name": "Boxed Letter V",
+      "unicode": "",
+      "emoji": "<:BoxedLetterV:1295508065436696586>",
+      "button_row": 1
+    },
+    {
+      "id": 22,
+      "name": "Boxed Letter W",
+      "unicode": "",
+      "emoji": "<:BoxedLetterW:1295508108537499800>",
+      "button_row": 2
+    },
+    {
+      "id": 23,
+      "name": "Boxed Letter X",
+      "unicode": "",
+      "emoji": "<:BoxedLetterX:1295508123532005421>",
+      "button_row": 2
+    },
+    {
+      "id": 24,
+      "name": "Boxed Letter Y",
+      "unicode": "",
+      "emoji": "<:BoxedLetterY:1295508136475496469>",
+      "button_row": 2
+    },
+    {
+      "id": 25,
+      "name": "Boxed Letter Z",
+      "unicode": "",
+      "emoji": "<:BoxedLetterZ:1295508152070049812>",
+      "button_row": 2
+    }
+  ]
+}

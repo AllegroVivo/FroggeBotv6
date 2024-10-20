@@ -1,0 +1,82 @@
+{
+  "name": "Boxed Numbers",
+  "items": [
+    {
+      "id": 26,
+      "name": "Boxed Number 0",
+      "unicode": "",
+      "emoji": "<:BoxedNumber0:1295509301397553296>",
+      "button_row": 0
+    },
+    {
+      "id": 27,
+      "name": "Boxed Number 1",
+      "unicode": "",
+      "emoji": "<:BoxedNumber1:1295509311803359314>",
+      "button_row": 0
+    },
+    {
+      "id": 28,
+      "name": "Boxed Number 2",
+      "unicode": "",
+      "emoji": "<:BoxedNumber2:1295509318816239677>",
+      "button_row": 0
+    },
+    {
+      "id": 29,
+      "name": "Boxed Number 3",
+      "unicode": "",
+      "emoji": "<:BoxedNumber3:1295509325476794431>",
+      "button_row": 0
+    },
+    {
+      "id": 30,
+      "name": "Boxed Number 4",
+      "unicode": "",
+      "emoji": "<:BoxedNumber4:1295509333311881246>",
+      "button_row": 1
+    },
+    {
+      "id": 31,
+      "name": "Boxed Number 5",
+      "unicode": "",
+      "emoji": "<:BoxedNumber5:1295509339443822653>",
+      "button_row": 1
+    },
+    {
+      "id": 32,
+      "name": "Boxed Number 6",
+      "unicode": "",
+      "emoji": "<:BoxedNumber6:1295509346364428310>",
+      "button_row": 1
+    },
+    {
+      "id": 33,
+      "name": "Boxed Number 7",
+      "unicode": "",
+      "emoji": "<:BoxedNumber7:1295509352563867688>",
+      "button_row": 1
+    },
+    {
+      "id": 34,
+      "name": "Boxed Number 8",
+      "unicode": "",
+      "emoji": "<:BoxedNumber8:1295509359169765406>",
+      "button_row": 2
+    },
+    {
+      "id": 35,
+      "name": "Boxed Number 9",
+      "unicode": "",
+      "emoji": "<:BoxedNumber9:1295509365813547019>",
+      "button_row": 2
+    },
+    {
+      "id": 36,
+      "name": "Boxed Number 10",
+      "unicode": "",
+      "emoji": "<:BoxedNumber10:1295509372998258718>",
+      "button_row": 2
+    }
+  ]
+}

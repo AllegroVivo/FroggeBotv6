@@ -197,7 +197,7 @@ class GuildLogger:
             timestamp=True
         )
 
-        entry_data = activity.generate_entries_report_str(True)
+        entry_data = await activity.generate_entries_report_str(True)
         entry_data += f"\n\nRolled at {datetime.now().strftime('%m-%d-%y %H:%M:%S')}"
         if roller is not None:
             entry_data += f" by {roller.display_name} ({roller.id})"

@@ -1,0 +1,75 @@
+{
+  "name": "Mouse Symbols",
+  "items": [
+    {
+      "id": 43,
+      "name": "Mouse No Click",
+      "unicode": "",
+      "emoji": "<:MouseNoClick:1295510182696194080>",
+      "button_row": 0
+    },
+    {
+      "id": 44,
+      "name": "Mouse Left Click",
+      "unicode": "",
+      "emoji": "<:MouseLeftClick:1295510163884740649>",
+      "button_row": 0
+    },
+    {
+      "id": 45,
+      "name": "Mouse Right Click",
+      "unicode": "",
+      "emoji": "<:MouseRightClick:1295510199695835146>",
+      "button_row": 0
+    },
+    {
+      "id": 46,
+      "name": "Mouse Both Click",
+      "unicode": "",
+      "emoji": "<:MouseBothClick:1295510151268274227>",
+      "button_row": 0
+    },
+    {
+      "id": 47,
+      "name": "Mouse Wheel",
+      "unicode": "",
+      "emoji": "<:MouseWheel:1295510213884903476>",
+      "button_row": 0
+    },
+    {
+      "id": 48,
+      "name": "Mouse 1",
+      "unicode": "",
+      "emoji": "<:Mouse1:1295510091864211456>",
+      "button_row": 1
+    },
+    {
+      "id": 49,
+      "name": "Mouse 2",
+      "unicode": "",
+      "emoji": "<:Mouse2:1295510103818240043>",
+      "button_row": 1
+    },
+    {
+      "id": 50,
+      "name": "Mouse 3",
+      "unicode": "",
+      "emoji": "<:Mouse3:1295510118057775115>",
+      "button_row": 1
+    },
+    {
+      "id": 51,
+      "name": "Mouse 4",
+      "unicode": "",
+      "emoji": "<:Mouse4:1295510129608753204>",
+      "button_row": 1
+    },
+    {
+      "id": 52,
+      "name": "Mouse 5",
+      "unicode": "",
+      "emoji": "<:Mouse5:1295510139490668607>",
+      "button_row": 1
+    }
+  ]
+}

@@ -201,22 +201,23 @@ class BaseActivity(ManagedObject, ABC):
         await interaction.respond(embed=confirm)
     
 ################################################################################
-    def page(self) -> Page:
+    async def page(self) -> Page:
         
         raise NotImplementedError
     
 ################################################################################
-    def generate_entries_report_str(self, final: bool = False) -> str:
+    async def generate_entries_report_str(self, final: bool = False) -> str:
 
         entry_data = (
             f"{self.activity_name} Entry Data for {self.name}:\n\n"
         )
-        self.entries.sort(key=lambda x: x.user.display_name)
+        # self.entries.sort(key=lambda x: x.user.display_name)
         for entry in self.entries:
+            user = await entry.user
             if final and entry in self.winners:
                 entry_data += "**"
             entry_data += (
-                f"{entry.user.display_name} - {entry.quantity}x entries - ({entry.user.id})"
+                f"{user.display_name} - {entry.quantity}x entries - ({user.id})"
             )
             if final and entry in self.winners:
                 entry_data += " - WINNER\n"

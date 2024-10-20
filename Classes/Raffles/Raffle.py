@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Type, TypeVar, Any, Dict
+from typing import TYPE_CHECKING, Type, TypeVar, Any, Dict, Optional
 
-from discord import User, Embed, EmbedField, Interaction, File
+from discord import User, Embed, EmbedField, Interaction, File, Message, NotFound, ChannelType, Forbidden
 
+from Classes.Common import LazyMessage
 from Classes.Activities import BaseActivity
 from .RaffleDetails import RaffleDetails
 from .RaffleEntry import RaffleEntry
 from Utilities import Utilities as U
 from Assets import BotEmojis
 from UI.Raffles import RaffleStatusView
-from Errors import NoEntries
+from Errors import NoEntries, ChannelMissing, InsufficientPermissions
 from UI.Common import ConfirmCancelView
 
 if TYPE_CHECKING:
@@ -28,6 +29,7 @@ class Raffle(BaseActivity):
 
     __slots__ = (
         "_active",
+        "_post_msg",
     )
 
 ################################################################################
@@ -40,6 +42,7 @@ class Raffle(BaseActivity):
         super().__init__(mgr, _id, details, entries, winners)
 
         self._active = kwargs.get("is_active", False)
+        self._post_msg = LazyMessage(self, kwargs.get("post_url"))
 
 ################################################################################
     @classmethod
@@ -64,6 +67,7 @@ class Raffle(BaseActivity):
         self._winners = [e for e in self._entries if e.id in data["winners"]]
 
         self._active = data["is_active"]
+        self._post_msg = LazyMessage(self, data["post_url"])
 
         return self
 
@@ -86,6 +90,17 @@ class Raffle(BaseActivity):
         return self.total_tickets * self.cost
 
 ################################################################################
+    @property
+    async def post_message(self) -> Optional[Message]:
+
+        return await self._post_msg.get()
+
+    @post_message.setter
+    def post_message(self, value: Message) -> None:
+
+        self._post_msg.set(value)
+
+################################################################################
     def update(self) -> None:
 
         self.bot.api.update_raffle(self)
@@ -95,7 +110,8 @@ class Raffle(BaseActivity):
 
         return {
             "winners": [e.id for e in self._winners],
-            "is_active": self._active
+            "is_active": self._active,
+            "post_url": self._post_msg.id
         }
 
 ################################################################################
@@ -140,6 +156,32 @@ class Raffle(BaseActivity):
                 EmbedField(
                     name="__Is Active__",
                     value=str(BotEmojis.Check if self._active else BotEmojis.Cross),
+                    inline=True
+                ),
+            ]
+        )
+
+################################################################################
+    def tracker(self) -> Embed:
+
+        return U.make_embed(
+            title=f"__{self.name or 'Raffle Status'}__",
+            description=(
+                f"**[`{self.total_tickets}`]** tickets sold\n"
+                f"**[`{self.total_cost:,}`]** gil in the pot"
+            ),
+            fields=[
+                EmbedField(
+                    name="__Cost per Ticket__",
+                    value=f"`{self.cost:,} gil` / ticket",
+                    inline=False
+                ),
+                EmbedField(
+                    name="__Prize Split__",
+                    value=(
+                        f"{self._details.winner_pct}/{self._details.venue_pct}\n"  # type: ignore
+                        f"*(winner/venue)*"
+                    ),
                     inline=True
                 ),
             ]
@@ -215,6 +257,8 @@ class Raffle(BaseActivity):
             entry = RaffleEntry.new(self, user.id, qty)
             self._entries.append(entry)
 
+        await self.update_post_components()
+
         confirm = U.make_embed(
             title="__Tickets Added__",
             description=(
@@ -227,11 +271,56 @@ class Raffle(BaseActivity):
 ################################################################################
     async def entries_report(self, interaction: Interaction) -> None:
 
-        entry_data = self.generate_entries_report_str()
+        entry_data = await self.generate_entries_report_str()
         filename = f"{self.name or 'Unnamed Raffle'} Entries - {datetime.now().strftime('%m-%d-%y')}.txt"
         with open(filename, "w", encoding="utf-8") as f:
             f.write(entry_data)
 
         await interaction.respond(file=File(filename))
+
+################################################################################
+    async def post_tracker(self, interaction: Interaction) -> None:
+
+        if await self.update_post_components():
+            return
+
+        prompt = U.make_embed(
+            title="__Post Tracking Message__",
+            description=(
+                "Please enter a mention of the channel you would you like to post "
+                "a tracking message in to track the status of this raffle?\n\n"
+                
+                "*(This message will be updated automatically as tickets are added.)*"
+            )
+        )
+        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel, [ChannelType.text])
+        if channel is None:
+            return
+
+        try:
+            self.post_message = await channel.send(embed=self.tracker())
+        except NotFound:
+            self.post_message = None
+            error = ChannelMissing()
+            await interaction.respond(embed=error, ephemeral=True)
+        except Forbidden:
+            error = InsufficientPermissions(channel, "Send Messages")
+            await interaction.respond(embed=error, ephemeral=True)
+        else:
+            await interaction.respond("**Tracker Posted**")
+
+################################################################################
+    async def update_post_components(self) -> bool:
+
+        if (await self.post_message) is None:
+            return False
+
+        try:
+            await (await self.post_message).edit(embed=self.tracker())
+        except NotFound:
+            self.post_message = None
+            return False
+        else:
+            return True
 
 ################################################################################

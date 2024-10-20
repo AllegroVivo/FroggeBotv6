@@ -154,5 +154,10 @@ class PositionManager(ObjectManager):
         
         position = self[view.value]
         await position.remove(interaction)
+
+        # Remove all staff qualifications
+        await self.guild.staff_manager.remove_position(position)  # type: ignore
+        # Remove from all active events
+        await self.guild.event_manager.remove_position(position)  # type: ignore
         
 ################################################################################

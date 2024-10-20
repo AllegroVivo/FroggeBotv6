@@ -9,5 +9,6 @@ from .ShiftBracketMenuStatusView import ShiftBracketMenuStatusView
 from .ShiftBracketTimeSelectView import ShiftBracketTimeSelectView
 from .EventPositionsStatusView import EventPositionsStatusView
 from .EventSignupView import EventSignupView
+from .EventTemplateView import EventTemplateView
 from .EventListView import EventListView
 ################################################################################

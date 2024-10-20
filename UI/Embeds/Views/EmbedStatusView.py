@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from discord import User, Interaction, ButtonStyle
 
+from Assets import BotEmojis
 from UI.Common import FroggeView, CloseMessageButton, FroggeButton
 
 if TYPE_CHECKING:
@@ -31,7 +32,8 @@ class EmbedStatusView(FroggeView):
             AddFieldButton(),
             ModifyFieldButton(),
             RemoveFieldButton(),
-            CloseMessageButton()
+            CloseMessageButton(),
+            PostEmbedButton()
         ]
         for btn in button_list:
             self.add_item(btn)
@@ -251,5 +253,21 @@ class RemoveFieldButton(FroggeButton):
         await self.view.edit_message_helper(
             interaction, embed=await self.view.ctx.status(), view=self.view
         )
+
+################################################################################
+class PostEmbedButton(FroggeButton):
+
+    def __init__(self):
+
+        super().__init__(
+            style=ButtonStyle.primary,
+            label="Post Embed",
+            disabled=False,
+            row=2,
+            emoji=BotEmojis.CheckGreen
+        )
+
+    async def callback(self, interaction: Interaction):
+        await self.view.ctx.post(interaction)
 
 ################################################################################

@@ -166,4 +166,11 @@ class StaffQualifications:
         self._parent.update()
 
 ################################################################################
+    def remove(self, position: Position) -> None:
+
+        if position in self._qualifications:
+            self._qualifications.remove(position)
+            self._parent.update()
+
+################################################################################
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, UTC
 from typing import TYPE_CHECKING, Type, TypeVar, Optional, Any, Dict, List
 
 from discord import Interaction, Embed, EmbedField, SelectOption
@@ -11,7 +11,6 @@ from UI.Common import TimeSelectView, ConfirmCancelView
 from UI.Events import ShiftBracketStatusView
 from Utilities import Utilities as U
 from logger import log
-from .TemplateShift import TemplateShift
 
 if TYPE_CHECKING:
     from Classes import Event, FroggeBot, GuildData, StaffMember
@@ -60,14 +59,20 @@ class ShiftBracket(Identifiable):
 
 ################################################################################
     @classmethod
-    def from_template(cls: Type[SB], parent: Event, other: TemplateShift) -> SB:
+    def copy(cls: Type[SB], parent: Event, other: ShiftBracket) -> SB:
 
-        return cls(
-            parent=parent,
-            _id=parent.bot.api.create_shift_bracket(parent.id, other.start_dt, other.end_dt),
-            start_time=other.start_dt,
-            end_time=other.end_dt
-        )
+        if other.start_time and other.end_time:
+            year = datetime.now(UTC).year
+            start_day = end_day = datetime.now(UTC).day
+            if other.end_time.time() < other.start_time.time():
+                end_day += 1
+
+            start_time = other.start_time.replace(day=start_day, year=year)
+            end_time = other.end_time.replace(day=end_day, year=year)
+        else:
+            start_time = end_time = None
+
+        return cls.new(parent, start_time, end_time)
 
 ################################################################################
     @property

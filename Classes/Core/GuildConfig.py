@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING, Optional, Any, Dict, Type, TypeVar
 
 from discord import Interaction, Embed, EmbedField, TextChannel, ChannelType
+from dotenv import load_dotenv
 
 from Enums import Timezone
-from UI.Common import FroggeSelectView
+from UI.Common import FroggeSelectView, BasicTextModal
 from UI.Core import GuildConfigurationStatusView
 from Utilities import Utilities as U
 from logger import log
@@ -28,6 +30,10 @@ class GuildConfiguration(FroggeObject):
         "_tz",
         "_log_channel",
     )
+
+    RESTRICTED_SERVERS = [
+        992483766306078840,  # FROG
+    ]
     
 ################################################################################
     def __init__(self, parent: GuildData):
@@ -35,7 +41,7 @@ class GuildConfiguration(FroggeObject):
         self._parent: GuildData = parent
         
         self._tz: Timezone = Timezone(7)  # Default to EST
-        self._log_channel: LazyChannel = None  # type: ignore
+        self._log_channel: LazyChannel = LazyChannel(self, None)
         
 ################################################################################
     async def load(self,  data: Dict[str, Any]) -> None:
@@ -114,6 +120,27 @@ class GuildConfiguration(FroggeObject):
     
 ################################################################################
     async def main_menu(self, interaction: Interaction) -> None:
+
+        # Prompt for password if on a restricted server (FROG)
+        if interaction.guild_id in self.RESTRICTED_SERVERS:
+            load_dotenv()
+            if os.getenv("DEBUG") != "True":
+                modal = BasicTextModal(
+                    title="Password Required",
+                    attribute="Password",
+                    max_length=10,
+                    example="Enter the password to access this menu."
+                )
+
+                await interaction.response.send_modal(modal)
+                await modal.wait()
+
+                if not modal.complete or modal.value is False:
+                    return
+
+                if modal.value != os.getenv("ADMIN_PASSWORD"):
+                    await interaction.respond("Incorrect password. Please try again.", ephemeral=True)
+                    return
 
         embed = await self.status()
         view = GuildConfigurationStatusView(interaction.user, self)

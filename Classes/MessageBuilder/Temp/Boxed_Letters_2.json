@@ -1,0 +1,83 @@
+{
+  "name": "Boxed Letters 2",
+  "items": [
+    {
+      "name": "Boxed Letter N",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Boxed Letter O",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Boxed Letter P",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Boxed Letter Q",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Boxed Letter R",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 0
+    },
+    {
+      "name": "Boxed Letter S",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Boxed Letter T",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Boxed Letter U",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Boxed Letter V",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 1
+    },
+    {
+      "name": "Boxed Letter W",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 2
+    },
+    {
+      "name": "Boxed Letter X",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 2
+    },
+    {
+      "name": "Boxed Letter Y",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 2
+    },
+    {
+      "name": "Boxed Letter Z",
+      "unicode": "",
+      "emoji": "",
+      "button_row": 2
+    }
+  ]
+}
