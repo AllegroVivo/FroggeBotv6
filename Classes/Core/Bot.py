@@ -5,6 +5,7 @@ import sys
 import traceback
 from datetime import datetime
 from typing import TYPE_CHECKING
+import json
 
 import pytz
 from discord import Attachment, Bot, TextChannel, ApplicationContext, DiscordException, File
@@ -89,7 +90,17 @@ class FroggeBot(Bot):
         
         log.info(None, "Retrieving full API payload...")
         payload = self.api.load_all()
-        print(payload)
+        
+        #NH: Be aware this will create and write the RuntimeLogs/ folder to the cwd. 
+        try:
+            log_folder = "RuntimeLogs/"
+            file_path = log_folder + "payload.json"
+            os.makedirs(log_folder, exist_ok=True)
+            with open(file_path, 'w+', encoding='utf8') as file:
+                file.write(json.dumps(payload))
+                log.info(None, f'Wrote payload to {file_path}')
+        except OSError as e:
+           log.error(None, f'Error reading or writing to {file_path}: {e.args}')
         
         for data in payload:
             frogge = self[data["id"]]
