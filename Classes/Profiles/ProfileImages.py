@@ -140,11 +140,11 @@ class ProfileImages(ProfileSection):
             color=self.parent.color,
             title=f"Image Details for `{self.parent.name}`",
             description=(
-                "The buttons below allow you to remove and image attached to your profile\n"
+                "The buttons below allow you to remove and image attached to your profile "
                 "or to view a paginated list of your current additional images.\n\n"
 
                 "***To change your thumbnail and main image assets, or to add an additional image\n"
-                "to your profile, use the `/profiles add_image` command.***"
+                "to your profile, click one of the buttons below!***"
             ),
             thumbnail_url=self._thumbnail or BotImages.ThumbnailMissing,
             image_url=self._main_image or BotImages.MainImageMissing,
