@@ -50,7 +50,7 @@ class BaseActivity(ManagedObject, ABC):
     def __getitem__(self, user_id: int) -> Optional[ActivityEntry]:
 
         for entry in self.entries:
-            if entry._user.id == user_id:
+            if entry.user.id == user_id:
                 return entry
 
 ################################################################################
