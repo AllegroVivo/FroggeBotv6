@@ -409,7 +409,6 @@ class FroggeEmbed(ManagedObject):
             return
 
         self.color = modal.value
-        self.update()
 
 ################################################################################
     async def set_timestamp(self, interaction: Interaction) -> None:
