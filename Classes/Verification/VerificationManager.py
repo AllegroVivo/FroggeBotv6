@@ -263,32 +263,34 @@ class VerificationManager(ObjectManager):
                 return
 
         interaction = inter or interaction
+        forename = surname = None
 
-        # Step 2: Enter Name and World
-        raw = await self.get_name_and_world(interaction)
-        if raw is None:
-            return
+        if self._config.require_2fa or self._config.change_name:
+            # Step 2: Enter Name and World
+            raw = await self.get_name_and_world(interaction)
+            if raw is None:
+                return
 
-        forename, surname, _ = raw
+            forename, surname, _ = raw
 
-        character_id = await self.bot.lodestone.fetch_character_id(interaction, *raw)
-        if character_id is None:
-            return
+            character_id = await self.bot.lodestone.fetch_character_id(interaction, *raw)
+            if character_id is None:
+                return
 
-        # Step 3: 2FA Verification
-        if self._config.require_2fa:
-            if await self.secondary_verification(interaction, character_id):
-                verification = VerificationData.new(
-                    mgr=self,
-                    user=interaction.user,
-                    name=f"{forename} {surname}",
-                    lodestone_id=character_id
-                )
-                self._managed.append(verification)
+            # Step 3: 2FA Verification
+            if self._config.require_2fa:
+                if await self.secondary_verification(interaction, character_id):
+                    verification = VerificationData.new(
+                        mgr=self,
+                        user=interaction.user,
+                        name=f"{forename} {surname}",
+                        lodestone_id=character_id
+                    )
+                    self._managed.append(verification)
 
-        # Step 4: Change server nickname
-        if self._config.change_name:
-            await self.set_server_nickname(interaction, character_id)
+            # Step 4: Change server nickname
+            if self._config.change_name:
+                await self.set_server_nickname(interaction, character_id)
 
         # Step 5: Swap Roles
         message_str = ""
@@ -311,7 +313,10 @@ class VerificationManager(ObjectManager):
 
         # Step 6: Log Verification
         if self._config.log_events:
-            await self.guild.log.verification_submitted(interaction.user, f"{forename} {surname}")
+            if forename is not None:
+                await self.guild.log.verification_submitted(interaction.user, f"{forename} {surname}")
+            else:
+                await self.guild.log.verification_submitted(interaction.user, "Character Verification Off")
 
         await interaction.respond(message_str or f"Success! You are now verified.", ephemeral=True)
 
@@ -395,7 +400,7 @@ class VerificationManager(ObjectManager):
         )
         view = HomeWorldSelectView(interaction.user)
 
-        await interaction.respond(embed=prompt, view=view)
+        await interaction.respond(embed=prompt, view=view, ephemeral=True)
         await view.wait()
 
         if not view.complete or view.value is False:
