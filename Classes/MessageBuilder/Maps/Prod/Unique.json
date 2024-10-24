@@ -27,14 +27,14 @@
       "name": "Clock",
       "unicode": "",
       "emoji": "<:Clock:1295516029635526726>",
-      "button_row": 1
+      "button_row": 0
     },
     {
       "id": 124,
       "name": "Gil",
       "unicode": "",
       "emoji": "<:Gil:1298800053816660080>",
-      "button_row": 1
+      "button_row": 0
     },
     {
       "id": 78,
@@ -48,14 +48,14 @@
       "name": "Hex Dots",
       "unicode": "",
       "emoji": "<:HexDots:1295518921738289192>",
-      "button_row": 2
+      "button_row": 1
     },
     {
       "id": 115,
       "name": "Loop",
       "unicode": "",
       "emoji": "<:Loop:1295518992361979924>",
-      "button_row": 2
+      "button_row": 1
     },
     {
       "id": 79,
@@ -69,28 +69,28 @@
       "name": "Shield",
       "unicode": "",
       "emoji": "<:Shield:1295518954332225577>",
-      "button_row": 2
+      "button_row": 1
     },
     {
       "id": 96,
       "name": "Boxed Star",
       "unicode": "",
       "emoji": "<:BoxedStar:1295517563152760862>",
-      "button_row": 1
+      "button_row": 2
     },
     {
       "id": 111,
       "name": "Fancy S",
       "unicode": "",
       "emoji": "<:FancyS:1295518854361120779>",
-      "button_row": 1
+      "button_row": 2
     },
     {
       "id": 75,
       "name": "Star",
       "unicode": "",
       "emoji": "<:Star:1295515957309083720>",
-      "button_row": 0
+      "button_row": 2
     },
     {
       "id": 86,
