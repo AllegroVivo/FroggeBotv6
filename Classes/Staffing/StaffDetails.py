@@ -7,7 +7,7 @@ from discord import Interaction, Embed, EmbedField
 
 from Errors import MaxItemsReached
 from .EmploymentPeriod import EmploymentPeriod
-from UI.Common import BasicTextModal, InstructionsInfo, FroggeSelectView
+from UI.Common import BasicTextModal, InstructionsInfo, FroggeSelectView, DateTimeModal
 from UI.Staffing import EmploymentHistoryMenuView
 from Utilities import Utilities as U
 
@@ -210,7 +210,7 @@ class StaffDetails:
 ################################################################################
     def get_employment_period(self, period_id: str) -> Optional[EmploymentPeriod]:
 
-        return next((ep for ep in self.employment_dates if ep.id == period_id), None)
+        return next((ep for ep in self.employment_dates if ep.id == int(period_id)), None)
 
 ################################################################################
     def get_current_employment_period(self) -> Optional[EmploymentPeriod]:
@@ -264,10 +264,17 @@ class StaffDetails:
             await interaction.respond(embed=error, ephemeral=True)
             return
 
+        modal = DateTimeModal("Hire Date", None)
+
+        await interaction.response.send_modal(modal)
+        await modal.wait()
+
+        if not modal.complete:
+            return
+
         ep = EmploymentPeriod.new(self)
         self.employment_dates.append(ep)
-
-        await ep.set_hire_date(interaction)
+        ep.hire_date = self._parent.py_tz.localize(modal.value)
 
 ################################################################################
     async def modify_employment_date(self, interaction: Interaction) -> None:

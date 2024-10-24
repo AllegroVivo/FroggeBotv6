@@ -1,0 +1,110 @@
+{
+  "name": "Regular Symbols",
+  "items": [
+    {
+      "id": 90,
+      "name": "AM",
+      "unicode": "",
+      "emoji": "<:AM:1295517270088613969>",
+      "button_row": 0
+    },
+    {
+      "id": 91,
+      "name": "PM",
+      "unicode": "",
+      "emoji": "<:PM:1295517385909997670>",
+      "button_row": 0
+    },
+    {
+      "id": 97,
+      "name": "Circle",
+      "unicode": "",
+      "emoji": "<:Circle:1295518091245256725>",
+      "button_row": 0
+    },
+    {
+      "id": 98,
+      "name": "Square",
+      "unicode": "",
+      "emoji": "<:Square:1295518131866959882>",
+      "button_row": 0
+    },
+    {
+      "id": 99,
+      "name": "Cross",
+      "unicode": "",
+      "emoji": "<:Cross:1295518164280545280>",
+      "button_row": 0
+    },
+    {
+      "id": 100,
+      "name": "Triangle",
+      "unicode": "",
+      "emoji": "<:Triangle:1295518218802298881>",
+      "button_row": 1
+    },
+    {
+      "id": 101,
+      "name": "Hexagon",
+      "unicode": "",
+      "emoji": "<:Hexagon:1295518279485362187>",
+      "button_row": 1
+    },
+    {
+      "id": 94,
+      "name": "Boxed Plus",
+      "unicode": "",
+      "emoji": "<:BoxedPlus:1295517474057355385>",
+      "button_row": 1
+    },
+    {
+      "id": 118,
+      "name": "Cross Hollow",
+      "unicode": "",
+      "emoji": "<:CrossHollow:1295519152831991999>",
+      "button_row": 1
+    },
+    {
+      "id": 95,
+      "name": "Boxed Question",
+      "unicode": "",
+      "emoji": "<:BoxedQuestionMark:1295517525265879120>",
+      "button_row": 1
+    },
+    {
+      "id": 83,
+      "name": "Die Marker",
+      "unicode": "",
+      "emoji": "<:Dice:1295516262797017108>",
+      "button_row": 2
+    },
+    {
+      "id": 80,
+      "name": "Left Bracket",
+      "unicode": "",
+      "emoji": "<:LBracket:1295516135797817465>",
+      "button_row": 2
+    },
+    {
+      "id": 81,
+      "name": "Right Bracket",
+      "unicode": "",
+      "emoji": "<:Rbracket:1295516173630443530>",
+      "button_row": 2
+    },
+    {
+      "id": 72,
+      "name": "Curve Arrow Left",
+      "unicode": "",
+      "emoji": "<:LCurvedArrow:1295515696318513162>",
+      "button_row": 2
+    },
+    {
+      "id": 73,
+      "name": "Curve Arrow Right",
+      "unicode": "",
+      "emoji": "<:RCurvedArrow:1295515728127983707>",
+      "button_row": 2
+    }
+  ]
+}

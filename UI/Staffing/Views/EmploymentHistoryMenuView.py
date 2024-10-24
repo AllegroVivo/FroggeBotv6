@@ -43,7 +43,7 @@ class AddEmploymentDateButton(FroggeButton):
     async def callback(self, interaction: Interaction):
         await self.view.ctx.add_employment_date(interaction)
         await self.view.edit_message_helper(
-            interaction, embed=await self.view.ctx.status(), view=self.view
+            interaction, embed=self.view.ctx.employment_history_status(), view=self.view
         )
         
 ################################################################################
@@ -61,7 +61,7 @@ class ModifyEmploymentDateButton(FroggeButton):
     async def callback(self, interaction: Interaction):
         await self.view.ctx.modify_employment_date(interaction)
         await self.view.edit_message_helper(
-            interaction, embed=await self.view.ctx.status(), view=self.view
+            interaction, embed=self.view.ctx.employment_history_status(), view=self.view
         )
         
 ################################################################################
@@ -79,7 +79,7 @@ class RemoveEmploymentDateButton(FroggeButton):
     async def callback(self, interaction: Interaction):
         await self.view.ctx.remove_employment_date(interaction)
         await self.view.edit_message_helper(
-            interaction, embed=await self.view.ctx.status(), view=self.view
+            interaction, embed=self.view.ctx.employment_history_status(), view=self.view
         )
         
 ################################################################################

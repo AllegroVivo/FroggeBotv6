@@ -162,7 +162,34 @@ class Raffle(BaseActivity):
         )
 
 ################################################################################
-    def tracker(self) -> Embed:
+    async def tracker(self) -> Embed:
+
+        fields = [
+            EmbedField(
+                name="__Cost per Ticket__",
+                value=f"`{self.cost:,} gil` / ticket",
+                inline=True
+            ),
+            EmbedField(
+                name="__Prize Split__",
+                value=(
+                    f"{self._details.winner_pct}/{self._details.venue_pct}\n"  # type: ignore
+                    f"*(winner/venue)*"
+                ),
+                inline=True
+            ),
+        ]
+        if self.winners:
+            winner_str = ""
+            for w in self.winners:
+                winner_str += f"{(await w.user).mention} ({(await w.user).display_name})\n"
+            fields.append(
+                EmbedField(
+                    name="__Winners__",
+                    value=winner_str,
+                    inline=False
+                )
+            )
 
         return U.make_embed(
             title=f"__{self.name or 'Raffle Status'}__",
@@ -170,21 +197,7 @@ class Raffle(BaseActivity):
                 f"**[`{self.total_tickets}`]** tickets sold\n"
                 f"**[`{self.total_cost:,}`]** gil in the pot"
             ),
-            fields=[
-                EmbedField(
-                    name="__Cost per Ticket__",
-                    value=f"`{self.cost:,} gil` / ticket",
-                    inline=False
-                ),
-                EmbedField(
-                    name="__Prize Split__",
-                    value=(
-                        f"{self._details.winner_pct}/{self._details.venue_pct}\n"  # type: ignore
-                        f"*(winner/venue)*"
-                    ),
-                    inline=True
-                ),
-            ]
+            fields=fields
         )
 
 ################################################################################
@@ -203,6 +216,7 @@ class Raffle(BaseActivity):
         await super().determine_winners(interaction)
         await self.guild.log.activity_rolled(self, interaction.user)
 
+        await self.update_post_components()
         await interaction.respond("** **", delete_after=0.1)
 
 ################################################################################
@@ -298,7 +312,7 @@ class Raffle(BaseActivity):
             return
 
         try:
-            self.post_message = await channel.send(embed=self.tracker())
+            self.post_message = await channel.send(embed=await self.tracker())
         except NotFound:
             self.post_message = None
             error = ChannelMissing()
@@ -316,7 +330,7 @@ class Raffle(BaseActivity):
             return False
 
         try:
-            await (await self.post_message).edit(embed=self.tracker())
+            await (await self.post_message).edit(embed=await self.tracker())
         except NotFound:
             self.post_message = None
             return False

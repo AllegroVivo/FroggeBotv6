@@ -555,23 +555,22 @@ class Utilities:
             )
             await interaction.respond(embed=embed)
             return
-        
-        intermediate = await interaction.respond("Processing image... Please wait...")
 
         image_url = None
         if message.content.lower() != "cancel":
+            intermediate = await interaction.respond("Processing image... Please wait...")
             try:
                 image_url = await interaction.client.dump_image(message.attachments[0])  # type: ignore
             except NotFound:
                 pass
 
+            try:
+                await intermediate.delete()
+            except NotFound:
+                pass
+
         try:
             await message.delete()
-        except NotFound:
-            pass
-        
-        try:
-            await intermediate.delete()
         except NotFound:
             pass
 

@@ -8,7 +8,7 @@ from discord import User, Embed, SelectOption, Interaction
 from Classes.Common import ManagedObject
 from Utilities import Utilities as U
 from UI.MessageBuilder import PFMessageBuilderView
-from UI.Common import BasicTextModal
+from UI.Common import BasicTextModal, InstructionsInfo
 
 if TYPE_CHECKING:
     from Classes import MessageBuilder, SymbolMap, SymbolItem
@@ -181,7 +181,21 @@ class PFMessage(ManagedObject):
                 title="Add Plain Text",
                 attribute="Text",
                 max_length=200 - len(self),
-                required=False
+                required=False,
+                instructions=InstructionsInfo(
+                    title="Additional Unicode Symbols",
+                    placeholder="Additional Unicode Symbols",
+                    value=(
+                        "Additional Unicode symbols for copy/pasta:\n"
+                        "π ™ ø Ø × ∞ ¤ ω ψ ↑ ↓ → ← ⇔ ⇒ ♂ ♀ ♪ ¶ § © ® ª ¹ ² ³\n"
+                        "⇔ ｢ ｣ « » ≪ ≫ 《 》 【 】。· • • ☁ ☀ ☃ ♭ ♯ ✓ 〃\n"
+                        "● ◎ ○ ■ □ ▲ △ ▼ ▽ ∇ ♥ ♡ ★ ☆ ◆ ◇ ♦ ♦ ♣ ♠ ♤ ♧ ¶\n"
+                        "α ß ∇ Θ Φ Ω δ ∂ ∃ ∀ ∈ ∋ ∑ √ ∝ ∞ ∠ ∟ ∥ ∪ ∩ ∨ ∧ ∫ ∮ ∬\n"
+                        "∴ ∵ ∽ ≒ ≠ ⊿ ⌒ ₀₁₂₃₄₅₆₇₈₉\n"
+                        "⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇\n"
+                        "⓪①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"
+                    )
+                )
             )
 
             await interaction.response.send_modal(modal)

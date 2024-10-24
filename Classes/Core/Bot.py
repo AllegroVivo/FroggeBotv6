@@ -100,7 +100,7 @@ class FroggeBot(Bot):
                 file.write(json.dumps(payload))
                 log.info(None, f'Wrote payload to {file_path}')
         except OSError as e:
-           log.error(None, f'Error reading or writing to {file_path}: {e.args}')
+            log.error(None, f'Error reading or writing to {file_path}: {e.args}')
         
         for data in payload:
             frogge = self[data["id"]]
@@ -144,9 +144,15 @@ class FroggeBot(Bot):
         tb_list = traceback.format_exception(type(error), error, error.__traceback__)
 
         tz = pytz.timezone("America/Los_Angeles")
-        filename = f"ErrorLogs/{tz.localize(datetime.now()).strftime('%m-%d-%y-%H-%M-%S')}-error.log"
-        with open(filename, "w") as f:
-            f.write("".join(tb_list))
+        try:
+            directory = "ErrorLogs/"
+            fp = f"ErrorLogs/{tz.localize(datetime.now()).strftime('%m-%d-%y-%H-%M-%S')}-error.log"
+            os.makedirs(directory, exist_ok=True)
+            with open(fp, "w") as file:
+                file.write("".join(tb_list))
+                log.info(None, f"Error logged to {fp}")
+        except OSError as e:
+            log.error(None, f"Error logging to {fp}: {e.args}")
 
         divider = "The above exception was the direct cause of the following exception:"
         divider_loc = None
@@ -165,7 +171,7 @@ class FroggeBot(Bot):
 
         await self._error_dump.send(
             f"# __Error in Command:__ `{ctx.command.name}`\n```{tb_str}```",
-            file=File(filename)
+            file=File(fp)
         )
 
 ################################################################################
