@@ -1,0 +1,82 @@
+{
+  "name": "Markers",
+  "items": [
+    {
+      "id": 119,
+      "name": "Level Sync A",
+      "unicode": "",
+      "emoji": "<:LevelSyncA:1295519192656773160>",
+      "button_row": 0
+    },
+    {
+      "id": 120,
+      "name": "Level Sync B",
+      "unicode": "",
+      "emoji": "<:LevelSyncB:1295519206317752342>",
+      "button_row": 0
+    },
+    {
+      "id": 84,
+      "name": "X Pointer",
+      "unicode": "",
+      "emoji": "<:XPointer:1295516295990870036>",
+      "button_row": 0
+    },
+    {
+      "id": 85,
+      "name": "O Pointer",
+      "unicode": "",
+      "emoji": "<:OPointer:1295516352630755378>",
+      "button_row": 0
+    },
+    {
+      "id": 117,
+      "name": "Triangle Pointer",
+      "unicode": "",
+      "emoji": "<:TrianglePointer:1295519113934012567>",
+      "button_row": 1
+    },
+    {
+      "id": 122,
+      "name": "Diamond Down",
+      "unicode": "",
+      "emoji": "<:DiamondDown:1295519314991906867>",
+      "button_row": 1
+    },
+    {
+      "id": 123,
+      "name": "Diamond X",
+      "unicode": "",
+      "emoji": "<:DiamondX:1295519326199218176>",
+      "button_row": 1
+    },
+    {
+      "id": 116,
+      "name": "Fancy X",
+      "unicode": "",
+      "emoji": "<:FancyX:1295519024721035306>",
+      "button_row": 1
+    },
+    {
+      "id": 92,
+      "name": "Arrow Right",
+      "unicode": "",
+      "emoji": "<:ArrowRight:1295517415160942674>",
+      "button_row": 2
+    },
+    {
+      "id": 93,
+      "name": "Arrow Down",
+      "unicode": "",
+      "emoji": "<:ArrowDown:1295517444613345361>",
+      "button_row": 2
+    },
+    {
+      "id": 82,
+      "name": "Prohibited",
+      "unicode": "",
+      "emoji": "<:Prohibited:1295516208434516079>",
+      "button_row": 2
+    }
+  ]
+}

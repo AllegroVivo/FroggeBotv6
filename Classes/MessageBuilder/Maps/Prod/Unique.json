@@ -1,0 +1,110 @@
+{
+  "name": "Unique Glyphs",
+  "items": [
+    {
+      "id": 74,
+      "name": "Sprout",
+      "unicode": "",
+      "emoji": "<:Sprout:1295515869316911176>",
+      "button_row": 0
+    },
+    {
+      "id": 125,
+      "name": "High Quality",
+      "unicode": "",
+      "emoji": "<:HighQuality:1298800610392674324>",
+      "button_row": 0
+    },
+    {
+      "id": 76,
+      "name": "Collectible",
+      "unicode": "",
+      "emoji": "<:Collectible:1295515990771236875>",
+      "button_row": 0
+    },
+    {
+      "id": 77,
+      "name": "Clock",
+      "unicode": "",
+      "emoji": "<:Clock:1295516029635526726>",
+      "button_row": 1
+    },
+    {
+      "id": 124,
+      "name": "Gil",
+      "unicode": "",
+      "emoji": "<:Gil:1298800053816660080>",
+      "button_row": 1
+    },
+    {
+      "id": 78,
+      "name": "Hydaelyn",
+      "unicode": "",
+      "emoji": "<:Hyadelyn:1295516063974297690>",
+      "button_row": 1
+    },
+    {
+      "id": 113,
+      "name": "Hex Dots",
+      "unicode": "",
+      "emoji": "<:HexDots:1295518921738289192>",
+      "button_row": 2
+    },
+    {
+      "id": 115,
+      "name": "Loop",
+      "unicode": "",
+      "emoji": "<:Loop:1295518992361979924>",
+      "button_row": 2
+    },
+    {
+      "id": 79,
+      "name": "Chains",
+      "unicode": "",
+      "emoji": "<:Chains:1295516096845058078>",
+      "button_row": 1
+    },
+    {
+      "id": 114,
+      "name": "Shield",
+      "unicode": "",
+      "emoji": "<:Shield:1295518954332225577>",
+      "button_row": 2
+    },
+    {
+      "id": 96,
+      "name": "Boxed Star",
+      "unicode": "",
+      "emoji": "<:BoxedStar:1295517563152760862>",
+      "button_row": 1
+    },
+    {
+      "id": 111,
+      "name": "Fancy S",
+      "unicode": "",
+      "emoji": "<:FancyS:1295518854361120779>",
+      "button_row": 1
+    },
+    {
+      "id": 75,
+      "name": "Star",
+      "unicode": "",
+      "emoji": "<:Star:1295515957309083720>",
+      "button_row": 0
+    },
+    {
+      "id": 86,
+      "name": "Flower",
+      "unicode": "",
+      "emoji": "<:Flower:1295516413414342699>",
+      "button_row": 2
+    },
+    {
+      "id": 112,
+      "name": "Dots",
+      "unicode": "",
+      "emoji": "<:Dots:1295518889354072115>",
+      "button_row": 2
+    }
+  ]
+}
