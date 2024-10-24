@@ -373,7 +373,29 @@ class StaffMember(ManagedObject):
 ################################################################################
     async def remove_character(self, interaction: Interaction) -> None:
 
-        pass
+        if len(self.characters) == 1:
+            error = U.make_error(
+                title="Cannot Remove Character",
+                message="You must have at least one character profile.",
+                solution="Please add a new character profile before attempting to remove this one."
+            )
+            await interaction.respond(embed=error, ephemeral=True)
+            return
+
+        prompt = U.make_embed(
+            title="__Remove Character__",
+            description="Select the character you would like to remove."
+        )
+        view = FroggeSelectView(interaction.user, [c.select_option() for c in self.characters])
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        character = self.get_character(view.value)
+        await character.remove(interaction)
 
 ################################################################################
     async def remove(self, interaction: Interaction) -> None:

@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING, Type, TypeVar, Dict, Any, Optional
 from discord import User, Embed, SelectOption, Interaction
 from .CharacterDetails import CharacterDetails
 from Classes.Common import Identifiable
+from UI.Common import ConfirmCancelView
+from Utilities import Utilities as U
 
 if TYPE_CHECKING:
     from Classes import StaffMember, Profile
@@ -79,6 +81,12 @@ class StaffCharacter(Identifiable):
         return self._parent.guild.profile_manager[self._profile_id]
 
 ################################################################################
+    def delete(self) -> None:
+
+        self._parent.bot.api.delete_staff_character(self.id)
+        self._parent._characters.remove(self)
+
+################################################################################
     def select_option(self) -> SelectOption:
 
         return SelectOption(
@@ -90,5 +98,22 @@ class StaffCharacter(Identifiable):
     async def profile_menu(self, interaction: Interaction) -> None:
 
         await self.profile.menu(interaction)
+
+################################################################################
+    async def remove(self, interaction: Interaction) -> None:
+
+        confirm = U.make_embed(
+            title="__Remove Character__",
+            description=f"Are you sure you want to remove the character `{self.name}`?"
+        )
+        view = ConfirmCancelView(interaction.user)
+
+        await interaction.respond(embed=confirm, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        self.delete()
 
 ################################################################################

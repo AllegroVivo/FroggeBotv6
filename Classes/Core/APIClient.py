@@ -513,6 +513,14 @@ class APIClient:
         )
 
 ################################################################################
+    def delete_staff_character(self, character_id: int):
+
+        return self.request(
+            Route("DELETE", "/staffing/characters"),
+            id=character_id
+        )
+
+################################################################################
     def create_employment_date(self, staff_id: int):
 
         return self.request(
