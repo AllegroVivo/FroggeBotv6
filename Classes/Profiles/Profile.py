@@ -215,31 +215,13 @@ class Profile(ManagedObject):
 ################################################################################
     async def preview_profile(self, interaction: Interaction) -> None:
 
-        main_profile, _ = self.compile()
+        main_profile, about_me = self.compile()
+        embeds = [main_profile]
+        if about_me is not None:
+            embeds.append(about_me)
         view = CloseMessageView(interaction.user)
 
-        await interaction.respond(embed=main_profile, view=view)
-        await view.wait()
-
-################################################################################
-    async def preview_aboutme(self, interaction: Interaction) -> None:
-
-        _, aboutme = self.compile()
-        if aboutme is None:
-            error = U.make_error(
-                title="About Me Not Set",
-                message="You can't view an empty About Me section.",
-                solution=(
-                    "Fill it out in the `Profile Personality` section before "
-                    "trying again."
-                )
-            )
-            await interaction.respond(embed=error, ephemeral=True)
-            return
-
-        view = CloseMessageView(interaction.user)
-
-        await interaction.respond(embed=aboutme, view=view)
+        await interaction.respond(embeds=embeds, view=view)
         await view.wait()
 
 ################################################################################

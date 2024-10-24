@@ -25,10 +25,9 @@ class ProfileMainMenuView(FroggeView):
             AtAGlanceButton(),
             PersonalityButton(),
             ImagesButton(),
-            PreviewProfileButton(),
-            PreviewAboutMeButton(),
             PostProfileButton(),
             ProfileProgressButton(),
+            PreviewProfileButton(),
             CloseMessageButton()
         ]
         for btn in button_list:
@@ -102,29 +101,15 @@ class PreviewProfileButton(FroggeButton):
     def __init__(self):
         
         super().__init__(
-            style=ButtonStyle.primary,
+            style=ButtonStyle.secondary,
             label="Preview Profile",
             disabled=False,
-            row=1
+            row=1,
+            emoji=BotEmojis.EmojiMonocle
         )
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.preview_profile(interaction)
-        
-################################################################################
-class PreviewAboutMeButton(FroggeButton):
-    
-    def __init__(self):
-        
-        super().__init__(
-            style=ButtonStyle.primary,
-            label="Preview About Me",
-            disabled=False,
-            row=1
-        )
-        
-    async def callback(self, interaction: Interaction):
-        await self.view.ctx.preview_aboutme(interaction)
         
 ################################################################################
 class PostProfileButton(FroggeButton):
@@ -135,7 +120,7 @@ class PostProfileButton(FroggeButton):
             style=ButtonStyle.secondary,
             label="Post/Update Profile",
             disabled=False,
-            row=2,
+            row=1,
             emoji=BotEmojis.FlyingEnvelope
         )
         
@@ -151,7 +136,7 @@ class ProfileProgressButton(FroggeButton):
             style=ButtonStyle.secondary,
             label="Profile Progress",
             disabled=False,
-            row=2,
+            row=1,
             emoji=BotEmojis.Goose
         )
         
