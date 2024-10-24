@@ -35,7 +35,7 @@ class BasicTextModal(FroggeModal):
             self.add_item(
                 InputText(
                     style=InputTextStyle.multiline,
-                    label="Instructions",
+                    label=instructions.title or "Instructions",
                     placeholder=instructions.placeholder,
                     value=instructions.value,
                     required=False
