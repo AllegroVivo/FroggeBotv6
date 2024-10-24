@@ -19,6 +19,7 @@ class BotEmojis:
     Cross = PartialEmoji.from_str("❌")
     Diamond = PartialEmoji.from_str("💠")
     Drum = PartialEmoji.from_str("🥁")
+    EmojiMonocle = PartialEmoji.from_str("🧐")
     Envelope = PartialEmoji.from_str("💌")
     Eyes = PartialEmoji.from_str("👀")
     FlyingEnvelope = PartialEmoji.from_str("📨")
