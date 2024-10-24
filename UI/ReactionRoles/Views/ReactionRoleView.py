@@ -39,7 +39,8 @@ class RoleButton(FroggeButton):
             label=role.label or "Unlabeled Role",
             disabled=False,
             row=row,
-            custom_id=f"role:{role.id}"
+            custom_id=f"role:{role.id}",
+            emoji=role.emoji
         )
 
         self.role = role
