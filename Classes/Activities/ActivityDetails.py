@@ -3,9 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Optional, TypeVar, Type, Tuple, Any
 
-from discord import Interaction
+from discord import Interaction, SelectOption
 
-from UI.Common import BasicTextModal, BasicNumberModal
+from UI.Common import BasicTextModal, BasicNumberModal, FroggeSelectView
+from Utilities import Utilities as U
 
 if TYPE_CHECKING:
     from Classes import BaseActivity, FroggeBot
@@ -150,21 +151,23 @@ class ActivityDetails(ABC):
 ################################################################################
     async def set_num_winners(self, interaction: Interaction) -> None:
 
-        modal = BasicNumberModal(
+        options = [SelectOption(label=str(i), value=str(i)) for i in range(1, 11)]
+        prompt = U.make_embed(
             title=f"Set {self._parent.activity_name} Number of Winners",
-            attribute="Num. Winners",
-            cur_val=self.num_winners,
-            example="eg. '3'",
-            max_length=1
+            description=(
+                "Enter the number of winners for this activity. "
+                "This will determine how many winners are selected when the activity ends."
+            )
         )
+        view = FroggeSelectView(interaction.user, options)
 
-        await interaction.response.send_modal(modal)
-        await modal.wait()
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
 
-        if not modal.complete:
+        if not view.complete or view.value is False:
             return
 
-        self.num_winners = modal.value
+        self.num_winners = int(view.value)
     
 ################################################################################
     async def toggle_auto_notify(self, interaction: Interaction) -> None:
