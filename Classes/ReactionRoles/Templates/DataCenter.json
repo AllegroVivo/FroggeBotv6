@@ -1,0 +1,64 @@
+{
+  "name": "Data Center",
+  "title": "FFXIV Data Center",
+  "description": "Select your FFXIV Data Center.",
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1298935878298894346/FFXIVIcon.png",
+  "type": 2,
+  "roles": [
+    {
+      "name": "Aether",
+      "color": "#FF6F61",
+      "emoji": "🧭"
+    },
+    {
+      "name": "Crystal",
+      "color": "#FFC107",
+      "emoji": "🔮"
+    },
+    {
+      "name": "Dynamis",
+      "color": "#FFEB3B",
+      "emoji": "🎆"
+    },
+    {
+      "name": "Primal",
+      "color": "#4CAF50",
+      "emoji": "🦧"
+    },
+    {
+      "name": "Chaos",
+      "color": "#03A9F4",
+      "emoji": "👺"
+    },
+    {
+      "name": "Light",
+      "color": "#3F51B5",
+      "emoji": "🌞"
+    },
+    {
+      "name": "Materia",
+      "color": "#9C27B0",
+      "emoji": "🔵"
+    },
+    {
+      "name": "Elemental",
+      "color": "#F44336",
+      "emoji": "🔥"
+    },
+    {
+      "name": "Gaia",
+      "color": "#009688",
+      "emoji": "🌐"
+    },
+    {
+      "name": "Mana",
+      "color": "#8BC34A",
+      "emoji": "🪄"
+    },
+    {
+      "name": "Meteor",
+      "color": "#E91E63",
+      "emoji": "🌠"
+    }
+  ]
+}

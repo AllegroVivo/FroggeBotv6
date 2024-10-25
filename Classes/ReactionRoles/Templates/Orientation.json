@@ -1,0 +1,69 @@
+{
+  "name": "Sexual Orientation",
+  "title": "Please Select Your Sexual Orientation",
+  "description": "Click the button that corresponds to your sexual orientation.",
+  "thumbnail": "https://cdn.discordapp.com/attachments/957656105092272208/1298867020464652298/SexualOrientation.png",
+  "type": 2,
+  "roles": [
+    {
+      "name": "Aromantic",
+      "color": "#FF5555",
+      "emoji": "✨"
+    },
+    {
+      "name": "Asexual",
+      "color": "#FFB86C",
+      "emoji": "🎩"
+    },
+    {
+      "name": "Bisexual",
+      "color": "#F1FA8C",
+      "emoji": "🍪"
+    },
+    {
+      "name": "Demiromantic",
+      "color": "#50FA7B",
+      "emoji": "💥"
+    },
+    {
+      "name": "Demisexual",
+      "color": "#8BE9FD",
+      "emoji": "🌟"
+    },
+    {
+      "name": "Gay",
+      "color": "#6272A4",
+      "emoji": "🌭"
+    },
+    {
+      "name": "Lesbian",
+      "color": "#BD93F9",
+      "emoji": "🍑"
+    },
+    {
+      "name": "Pansexual",
+      "color": "#FF79C6",
+      "emoji": "🍳"
+    },
+    {
+      "name": "Queer",
+      "color": "#00D4D8",
+      "emoji": "🛝"
+    },
+    {
+      "name": "Questioning",
+      "color": "#A4FF4F",
+      "emoji": "💮"
+    },
+    {
+      "name": "Straight",
+      "color": "#FF007F",
+      "emoji": "⚜️"
+    },
+    {
+      "name": "♥ Please Ask My Orientation ♥",
+      "color": "#F8F8F2",
+      "emoji": "🧡"
+    }
+  ]
+}

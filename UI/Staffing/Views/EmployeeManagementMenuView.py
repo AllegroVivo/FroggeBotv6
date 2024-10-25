@@ -23,8 +23,8 @@ class EmployeeManagementMenuView(FroggeView):
             AddEmployeeButton(),
             ModifyEmployeeButton(),
             RemoveEmployeeButton(),
-            EmployeeReportButton(),
-            EmployeeStatisticsButton(),
+            # EmployeeReportButton(),
+            # EmployeeStatisticsButton(),
             CloseMessageButton()
         ]
         for btn in button_list:
