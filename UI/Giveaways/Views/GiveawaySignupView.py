@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from discord import Interaction, PartialEmoji, ButtonStyle
 from discord.ui import View
 
+from Assets import BotEmojis
 from UI.Common import FroggeButton
 
 if TYPE_CHECKING:
@@ -34,7 +35,7 @@ class GiveawaySignupButton(FroggeButton):
             label="Enter Giveaway",
             disabled=False,
             row=0,
-            emoji=giveaway.emoji,
+            emoji=giveaway.emoji or BotEmojis.PartyPopper,
             custom_id=f"giveaway_signup-{giveaway.id}"
         )
         
