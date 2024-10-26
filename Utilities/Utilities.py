@@ -18,7 +18,7 @@ from discord import (
     ChannelType,
     User,
     Role,
-    Emoji, SelectOption
+    Emoji, SelectOption, TextChannel, ForumChannel
 )
 from discord.abc import GuildChannel
 
@@ -585,12 +585,12 @@ class Utilities:
     
 ################################################################################
     @staticmethod
-    async def get_channel(
+    async def select_channel(
         interaction: Interaction,
         guild: GuildData,
         channel_type: str,
         channel_prompt: Optional[Embed] = None
-    ) -> Optional[GuildChannel]:
+    ) -> Optional[Union[TextChannel, ForumChannel]]:
 
         options = [
             SelectOption(

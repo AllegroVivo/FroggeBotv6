@@ -173,15 +173,15 @@ class ProfileChannelGroup(ManagedObject):
         prompt = U.make_embed(
             title="__Add Posting Channel__",
             description=(
-                "Please mention the channel you would like to add to this "
+                "Please select the channel you would like to add to this "
                 "posting channel group."
             )
         )
-        channel = await U.listen_for(
+        channel = await U.select_channel(
             interaction=interaction, 
-            prompt=prompt, 
-            mentionable_type=U.MentionableType.Channel,
-            channel_restrictions=[ChannelType.text, ChannelType.forum]
+            guild=self.guild,
+            channel_type="Profile Posting Channel",
+            channel_prompt=prompt
         )
         if channel is None:
             return

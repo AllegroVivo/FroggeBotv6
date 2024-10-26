@@ -379,7 +379,7 @@ class VIPManager:
                 "the VIP List to be posted."
             )
         )
-        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel)
+        channel = await U.select_channel(interaction, self.guild, "VIP List Channel", prompt)
         if channel is not None:
             try:
                 post_message = await channel.send(embeds=await self.compile())
@@ -401,7 +401,7 @@ class VIPManager:
                 "the VIP Perks List message to be posted."
             )
         )
-        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel)
+        channel = await U.select_channel(interaction, self.guild, "VIP Perks Channel", prompt)
         if channel is not None:
             try:
                 post_message = await channel.send(embed=self.perks_compile())
