@@ -20,7 +20,7 @@ class FroggeView(View):
         **kwargs
     ):
         
-        super().__init__(*args, timeout=600, **kwargs)
+        super().__init__(*args, timeout=1200, **kwargs)
 
         self.owner: User = owner
         self.value: Optional[Any] = None
