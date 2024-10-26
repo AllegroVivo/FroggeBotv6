@@ -32,6 +32,8 @@ class Route:
                     for k, v in parameters.items()
                 }
             )
+        if not url.endswith("/"):
+            url = url + "/"
         self.url: str = url
 
     @property
