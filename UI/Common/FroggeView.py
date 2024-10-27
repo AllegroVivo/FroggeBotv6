@@ -48,11 +48,6 @@ class FroggeView(View):
         else:
             self.clear_items()
 
-        await self._edit_message_helper()
-
-################################################################################
-    async def _edit_message_helper(self) -> None:
-
         try:
             await self._interaction.edit(view=self)
         except:
@@ -84,11 +79,11 @@ class FroggeView(View):
         self.set_button_attributes()
         
         try:
-            await interaction.message.edit(*args, **kwargs)
+            await interaction.edit(*args, **kwargs)
         except Exception as ex1:
             print(f"Edit Message Helper FAILED: {ex1}")
             try:
-                await interaction.edit(*args, **kwargs)
+                await interaction.message.edit(*args, **kwargs)
             except Exception as ex2:
                 print(f"Edit Message Helper FAILED: {ex2}")
                 try:
