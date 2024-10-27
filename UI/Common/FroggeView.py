@@ -85,11 +85,16 @@ class FroggeView(View):
         
         try:
             await interaction.message.edit(*args, **kwargs)
-        except:
+        except Exception as ex1:
+            print(f"Edit Message Helper FAILED: {ex1}")
             try:
-                await interaction.edit_original_response(*args, **kwargs)
-            except:
-                print("Edit Message Helper FAILED")
+                await interaction.edit(*args, **kwargs)
+            except Exception as ex2:
+                print(f"Edit Message Helper FAILED: {ex2}")
+                try:
+                    await interaction.edit_original_response(*args, **kwargs)
+                except Exception as ex3:
+                    print(f"Edit Message Helper FAILED: {ex3}")
 
 ################################################################################
     @staticmethod

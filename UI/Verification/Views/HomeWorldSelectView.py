@@ -44,10 +44,7 @@ class DataCenterSelect(Select):
         self.placeholder = DataCenter(int(self.values[0])).proper_name
         self.disabled = True
         
-        await self.view.dummy_response(interaction)
-        await self.view.edit_message_helper(
-            interaction, view=self.view
-        )
+        await self.view.edit_message_helper(interaction, view=self.view)
         
 ################################################################################
 class HomeWorldSelect(Select):
