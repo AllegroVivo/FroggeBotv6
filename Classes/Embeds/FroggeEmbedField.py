@@ -197,6 +197,7 @@ class FroggeEmbedField(Identifiable):
             example="eg. No spamming",
             cur_val=self.value,
             max_length=1024,
+            multiline=True
         )
 
         await interaction.response.send_modal(modal)
