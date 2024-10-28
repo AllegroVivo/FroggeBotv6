@@ -263,7 +263,7 @@ class PostEmbedButton(FroggeButton):
             style=ButtonStyle.primary,
             label="Post Embed",
             disabled=False,
-            row=2,
+            row=4,
             emoji=BotEmojis.CheckGreen
         )
 
