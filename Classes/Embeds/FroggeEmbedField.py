@@ -130,7 +130,8 @@ class FroggeEmbedField(Identifiable):
         return {
             "name": self.name,
             "value": self.value,
-            "inline": self.inline
+            "inline": self.inline,
+            "sort_order": self.order
         }
 
 ################################################################################
