@@ -7,6 +7,7 @@ from discord.ui import InputText
 
 from .FroggeModal import FroggeModal
 from Utilities.ErrorMessage import ErrorMessage
+from Utilities import Utilities as U
 
 if TYPE_CHECKING:
     from .InstructionsInfo import InstructionsInfo
@@ -60,7 +61,7 @@ class BasicNumberModal(FroggeModal):
         )
         
         try:
-            parsed = int(raw_value.replace(",", ""))
+            parsed = U.parse_salary(raw_value)
         except ValueError:
             error = InvalidNumber(raw_value)
             await interaction.respond(embed=error, ephemeral=True)

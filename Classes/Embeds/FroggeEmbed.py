@@ -7,14 +7,15 @@ from discord import User, Embed, EmbedField, PartialEmoji, SelectOption, Interac
 
 from Assets import BotEmojis, BotImages
 from Classes.Common import ManagedObject
-from Errors import InvalidURL
+from Errors import InvalidURL, MaxItemsReached
 from .FroggeEmbedHeader import FroggeEmbedHeader
 from .FroggeEmbedFooter import FroggeEmbedFooter
 from .FroggeEmbedImages import FroggeEmbedImages
 from .FroggeEmbedField import FroggeEmbedField
 from Utilities import Utilities as U, FroggeColor
 from UI.Embeds import EmbedStatusView
-from UI.Common import BasicTextModal, AccentColorModal, DateTimeModal
+from UI.Common import BasicTextModal, AccentColorModal, DateTimeModal, FroggeSelectView
+from Utilities.Constants import MAX_EMBED_FIELDS
 
 if TYPE_CHECKING:
     from Classes import EmbedManager
@@ -470,5 +471,63 @@ class FroggeEmbed(ManagedObject):
             )
         )
         await interaction.respond(embed=confirm)
+
+################################################################################
+    async def add_field(self, interaction: Interaction) -> None:
+
+        if len(self.fields) >= MAX_EMBED_FIELDS:
+            error = MaxItemsReached("Embed Fields", MAX_EMBED_FIELDS)
+            await interaction.respond(embed=error, ephemeral=True)
+            return
+
+        field = FroggeEmbedField.new(self)
+        self._fields.append(field)
+
+        await field.menu(interaction)
+
+################################################################################
+    async def modify_field(self, interaction: Interaction) -> None:
+
+        prompt = U.make_embed(
+            title="__Modify Embed Field__",
+            description=(
+                "Please select the field you want to modify."
+            )
+        )
+        view = FroggeSelectView(interaction.user, [f.select_option() for f in self.fields])
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        field = self.get_field(view.value)
+        await field.menu(interaction)
+
+################################################################################
+    async def remove_field(self, interaction: Interaction) -> None:
+
+        prompt = U.make_embed(
+            title="__Remove Embed Field__",
+            description=(
+                "Please select the field you want to remove."
+            )
+        )
+        view = FroggeSelectView(interaction.user, [f.select_option() for f in self.fields])
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        field = self.get_field(view.value)
+        await field.remove(interaction)
+
+################################################################################
+    def get_field(self, field_id: int) -> Optional[FroggeEmbedField]:
+
+        return next((f for f in self.fields if f.id == int(field_id)), None)
 
 ################################################################################

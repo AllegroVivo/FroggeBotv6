@@ -11,7 +11,6 @@ from discord import (
     OptionChoice,
 )
 from Enums import TransactionCategory
-from Utilities import IconMap
 
 if TYPE_CHECKING:
     from Classes import FroggeBot

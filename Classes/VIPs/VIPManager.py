@@ -397,8 +397,8 @@ class VIPManager:
         prompt = U.make_embed(
             title="__Post VIP Perks Message__",
             description=(
-                "Please enter a mention of the channel where you would like "
-                "the VIP Perks List message to be posted."
+                "Please select the channel where you would like the VIP Perks List "
+                "message to be posted."
             )
         )
         channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel)

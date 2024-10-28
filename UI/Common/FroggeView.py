@@ -20,7 +20,7 @@ class FroggeView(View):
         **kwargs
     ):
         
-        super().__init__(*args, timeout=600, **kwargs)
+        super().__init__(*args, timeout=1200, **kwargs)
 
         self.owner: User = owner
         self.value: Optional[Any] = None
@@ -47,11 +47,6 @@ class FroggeView(View):
             self.disable_all_items()
         else:
             self.clear_items()
-
-        await self._edit_message_helper()
-
-################################################################################
-    async def _edit_message_helper(self) -> None:
 
         try:
             await self._interaction.edit(view=self)
@@ -83,13 +78,18 @@ class FroggeView(View):
 
         self.set_button_attributes()
         
+        # try:
+        #     await interaction.edit(*args, **kwargs)
+        # except Exception as ex1:
+        #     print(f"Edit Message Helper FAILED: {ex1}")
+
         try:
             await interaction.message.edit(*args, **kwargs)
-        except:
+        except Exception as ex2:
             try:
                 await interaction.edit_original_response(*args, **kwargs)
-            except:
-                print("Edit Message Helper FAILED")
+            except Exception as ex3:
+                print(f"Edit Message Helper FAILED: {ex3}")
 
 ################################################################################
     @staticmethod

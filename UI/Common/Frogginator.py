@@ -21,7 +21,7 @@ class Frogginator(Paginator):
             default_button_row=kwargs.pop("default_button_row", 4),
             loop_pages=kwargs.pop("loop_pages", True),
             show_indicator=kwargs.pop("show_indicator", True),
-            timeout=kwargs.pop("timeout", 300),
+            timeout=kwargs.pop("timeout", 600),
             **kwargs
         )
 
