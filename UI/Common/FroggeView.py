@@ -78,18 +78,18 @@ class FroggeView(View):
 
         self.set_button_attributes()
         
+        # try:
+        #     await interaction.edit(*args, **kwargs)
+        # except Exception as ex1:
+        #     print(f"Edit Message Helper FAILED: {ex1}")
+
         try:
-            await interaction.edit(*args, **kwargs)
-        except Exception as ex1:
-            print(f"Edit Message Helper FAILED: {ex1}")
+            await interaction.message.edit(*args, **kwargs)
+        except Exception as ex2:
             try:
-                await interaction.message.edit(*args, **kwargs)
-            except Exception as ex2:
-                print(f"Edit Message Helper FAILED: {ex2}")
-                try:
-                    await interaction.edit_original_response(*args, **kwargs)
-                except Exception as ex3:
-                    print(f"Edit Message Helper FAILED: {ex3}")
+                await interaction.edit_original_response(*args, **kwargs)
+            except Exception as ex3:
+                print(f"Edit Message Helper FAILED: {ex3}")
 
 ################################################################################
     @staticmethod
