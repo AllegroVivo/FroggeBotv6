@@ -32,18 +32,27 @@ class AccentColorModal(BasicTextModal):
         
     async def callback(self, interaction: Interaction):
         raw_color = self.children[1].value.upper()
-        if raw_color is not None and raw_color.startswith("#"):
+
+        # Step 1: Remove the leading # if it exists
+        if raw_color.startswith("#"):
             raw_color = raw_color[1:]
 
+        # Step 2: Validate the length and characters
+        if len(raw_color) != 6 or not all(c in "0123456789ABCDEF" for c in raw_color):
+            error = InvalidColor(self.children[1].value)
+            await interaction.response.send_message(embed=error, ephemeral=True)
+            return
+
+        # Step 3: Convert to Colour if valid
         try:
             color = Colour(int(raw_color, 16)) if raw_color else None
         except ValueError:
             error = InvalidColor(self.children[1].value)
-            await interaction.respond(embed=error, ephemeral=True)
+            await interaction.response.send_message(embed=error, ephemeral=True)
         else:
             self.value = color
             self.complete = True
-            
+
         await self.dummy_response(interaction)
         self.stop()
         
