@@ -184,10 +184,10 @@ class RoomsManager(ObjectManager):
         prompt = U.make_embed(
             title="__Set Rooms Channel__",
             description=(
-                "Please mention the channel you would like to use for the Rooms module."
+                "Please select the channel you would like to use for the Rooms module."
             )
         )
-        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel)
+        channel = await U.select_channel(interaction, self.guild, "Rooms Channel", prompt)
         if channel is None:
             return
 

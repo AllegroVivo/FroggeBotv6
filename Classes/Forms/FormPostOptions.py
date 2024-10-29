@@ -295,12 +295,10 @@ class FormPostOptions:
         prompt = U.make_embed(
             title="Set Form Post Channel",
             description=(
-                "Please mention the channel you would like to use for this form post."
+                "Please select the channel you would like to use for this form post."
             )
         )
-        channel = await U.listen_for(
-            interaction, prompt, U.MentionableType.Channel, [ChannelType.text]
-        )
+        channel = await U.select_channel(interaction, self.guild, "Form Post Channel", prompt)
         if channel is not None:
             self.post_channel = channel
 

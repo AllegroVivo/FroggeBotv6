@@ -456,7 +456,7 @@ class FroggeEmbed(ManagedObject):
                 "Please enter the channel you want to post this embed to."
             )
         )
-        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel, [ChannelType.text])
+        channel = await U.select_channel(interaction, self.guild, "Embed Channel", prompt)
         if channel is None:
             return
 

@@ -259,15 +259,16 @@ class ReactionRoleManager(ObjectManager):
         prompt = U.make_embed(
             title="__Set Reaction Roles Channel__",
             description=(
-                "Please mention the channel where you would like to set up the Reaction Roles."
+                "Please select the channel where you would like to set up the "
+                "Reaction Roles."
             )
         )
 
-        channel = await U.listen_for(
+        channel = await U.select_channel(
             interaction=interaction,
-            prompt=prompt,
-            mentionable_type=U.MentionableType.Channel,
-            channel_restrictions=[ChannelType.text]
+            guild=self.guild,
+            channel_type="Reaction Roles Channel",
+            channel_prompt=prompt
         )
         if channel is None:
             return
