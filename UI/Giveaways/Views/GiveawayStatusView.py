@@ -49,6 +49,9 @@ class SetNameButton(FroggeButton):
             disabled=False,
             row=0
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.name)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_name(interaction)
@@ -67,6 +70,9 @@ class SetDescriptionButton(FroggeButton):
             disabled=False,
             row=0
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.description)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_description(interaction)
@@ -85,6 +91,9 @@ class SetColorButton(FroggeButton):
             disabled=False,
             row=0
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.color)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_color(interaction)
@@ -103,6 +112,9 @@ class SetPrizeButton(FroggeButton):
             disabled=False,
             row=0
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.prize)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_prize(interaction)
@@ -121,6 +133,9 @@ class SetThumbnailButton(FroggeButton):
             disabled=False,
             row=0
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.thumbnail)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_thumbnail(interaction)
@@ -139,6 +154,9 @@ class SetEmojiButton(FroggeButton):
             disabled=False,
             row=1
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.emoji)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_emoji(interaction)
@@ -157,6 +175,9 @@ class SetEndDateButton(FroggeButton):
             disabled=False,
             row=1
         )
+
+    def set_attributes(self) -> None:
+        self.set_style(self.view.ctx.end_date)
         
     async def callback(self, interaction: Interaction):
         await self.view.ctx.set_end_date(interaction)
