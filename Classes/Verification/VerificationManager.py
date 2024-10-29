@@ -449,7 +449,8 @@ class VerificationManager(ObjectManager):
         prompt = U.make_embed(
             title="__2-Step Verification__",
             description=(
-                "Please log into the Lodestone and enter the following code into your character's bio:\n"
+                "Please [log into the Lodestone](https://na.finalfantasyxiv.com/lodestone/account/login/) "
+                "and enter the following code into your character's bio:\n"
 
                 f"```{verification_code}```\n"
 
