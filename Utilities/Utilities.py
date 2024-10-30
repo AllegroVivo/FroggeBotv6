@@ -387,15 +387,15 @@ class Utilities:
 ################################################################################
     @staticmethod
     async def listen_for(
-        interaction: Interaction, 
+        interaction: Interaction,
         prompt: Embed,
         mentionable_type: MentionableType,
         channel_restrictions: Optional[List[ChannelType]] = None
     ) -> Optional[Union[Role, User, GuildChannel, Emoji]]:
-        
+
         if channel_restrictions and mentionable_type != Utilities.MentionableType.Channel:
             raise ValueError("Channel restriction can only be used with MentionableType.Channel")
-        
+
         match mentionable_type:
             case Utilities.MentionableType.User:
                 pattern = r"<@!?(\d+)>"
@@ -407,16 +407,16 @@ class Utilities:
                 pattern = r"<a?:\w+:(\d+)>"
             case _:
                 raise ValueError(f"Invalid MentionableType: {mentionable_type}")
-        
+
         if not prompt.footer:
             prompt.footer = EmbedFooter(text="Type 'cancel' to stop the operation.")
-            
+
         response = await interaction.respond(embed=prompt)
 
         def check(m):
             return (
                 m.author == interaction.user
-                and (x := re.match(pattern, m.content)) 
+                and (x := re.match(pattern, m.content))
                 or Utilities.is_unicode_emoji(m.content)
             ) or m.content.lower() == "cancel"
 
@@ -456,7 +456,6 @@ class Utilities:
                 color=CustomColor.brand_red()
             )
             await interaction.respond(embed=embed, ephemeral=True, delete_after=5)
-            
             try:
                 await message.delete()
                 await response.delete_original_response()
@@ -464,16 +463,22 @@ class Utilities:
                 pass
             finally:
                 return
-        
+
         results = re.match(pattern, message.content)
         if not results and not Utilities.is_unicode_emoji(message.content):
             await interaction.respond(embed=error, ephemeral=True)
-            return
+            try:
+                await message.delete()
+                await response.delete_original_response()
+            except NotFound:
+                pass
+            finally:
+                return
 
         if results:
             mentionable_id = int(results.group(1))
             guild: GuildData = interaction.client[interaction.guild_id]  # type: ignore
-            
+
             match mentionable_type:
                 case Utilities.MentionableType.User:
                     mentionable = await guild.get_or_fetch_member_or_user(mentionable_id)
@@ -485,18 +490,18 @@ class Utilities:
                     mentionable = await guild.get_or_fetch_emoji(mentionable_id)
                 case _:
                     raise ValueError(f"Invalid MentionableType: {mentionable_type}")
-            
+
             if not mentionable:
                 await interaction.respond(embed=error, ephemeral=True)
                 return
         else:
-            mentionable = message.content    
-        
+            mentionable = message.content
+
         try:
             await message.delete()
         except (NotFound, AttributeError):
             pass
-        
+
         try:
             await response.delete_original_response()
         except AttributeError:
@@ -506,7 +511,7 @@ class Utilities:
                 pass
         except:
             pass
-        
+
         if channel_restrictions and mentionable.type not in channel_restrictions:
             error = Utilities.make_embed(
                 title="Invalid Channel",
@@ -522,6 +527,16 @@ class Utilities:
 
         return mentionable
             
+################################################################################
+    @staticmethod
+    async def _clean_up_messages(messages: List[Message]) -> None:
+
+        for msg in messages:
+            try:
+                await msg.delete()
+            except (NotFound, AttributeError):
+                pass
+
 ################################################################################
     @staticmethod
     async def wait_for_image(interaction: Interaction, prompt: Embed) -> Optional[str]:
