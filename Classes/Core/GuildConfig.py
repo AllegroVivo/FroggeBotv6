@@ -161,9 +161,7 @@ class GuildConfiguration(FroggeObject):
             )
         )
 
-        channel = await U.listen_for(
-            interaction, prompt, U.MentionableType.Channel, [ChannelType.text]
-        )
+        channel = await U.select_channel(interaction, self.guild, "Log Stream Channel", prompt)
         if channel is None:
             return
 

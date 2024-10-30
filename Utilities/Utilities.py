@@ -18,11 +18,13 @@ from discord import (
     ChannelType,
     User,
     Role,
-    Emoji, Message
+    Emoji, SelectOption, TextChannel, ForumChannel
 )
 from discord.abc import GuildChannel
 
 from Enums import Timezone
+from UI.Common import FroggeSelectView
+from UI.Common.FroggeMultiMenuSelect import FroggeMultiMenuSelect
 from .Colors import CustomColor
 from .ErrorMessage import ErrorMessage
 
@@ -596,6 +598,77 @@ class Utilities:
         
         return image_url
     
+################################################################################
+    @staticmethod
+    async def select_channel(
+        interaction: Interaction,
+        guild: GuildData,
+        channel_type: str,
+        channel_prompt: Optional[Embed] = None
+    ) -> Optional[Union[TextChannel, ForumChannel]]:
+
+        options = [
+            SelectOption(
+                label=channel.name,
+                value=str(channel.id),
+            )
+            for channel in guild.parent.channels
+            if channel.type == ChannelType.category
+        ]
+
+        prompt = Utilities.make_embed(
+            title="__Category Selection__",
+            description=(
+                "Please select the category of the channel you would like to use"
+                f"for the `{channel_type}`."
+            )
+        )
+        view = FroggeMultiMenuSelect(interaction.user, None, options)
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        category_id = int(view.value)
+        category = await guild.get_or_fetch_channel(category_id)
+
+        if not category:
+            error = Utilities.make_embed(
+                title="__Invalid Category__",
+                description="The category you selected is somehow invalid. Please try again."
+            )
+            await interaction.respond(embed=error, ephemeral=True)
+            return
+
+        options = [
+            SelectOption(
+                label=channel.name,
+                value=str(channel.id),
+            )
+            for channel in category.channels  # type: ignore
+            if channel.type in (ChannelType.text, ChannelType.forum)
+        ]
+
+        prompt = channel_prompt or Utilities.make_embed(
+            title=f"__{channel_type.title()} Selection__",
+            description=(
+                f"Please select the specific channel you'd like to use for the "
+                f"`{channel_type.lower()}`."
+            )
+        )
+        view = FroggeMultiMenuSelect(interaction.user, None, options)
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        channel_id = int(view.value)
+        return await guild.get_or_fetch_channel(channel_id)
+
 ################################################################################
     @staticmethod
     def string_clamp(text: str, length: int) -> str:

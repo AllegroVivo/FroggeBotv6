@@ -130,7 +130,8 @@ class FroggeEmbedField(Identifiable):
         return {
             "name": self.name,
             "value": self.value,
-            "inline": self.inline
+            "inline": self.inline,
+            "sort_order": self.order
         }
 
 ################################################################################
@@ -196,6 +197,7 @@ class FroggeEmbedField(Identifiable):
             example="eg. No spamming",
             cur_val=self.value,
             max_length=1024,
+            multiline=True
         )
 
         await interaction.response.send_modal(modal)

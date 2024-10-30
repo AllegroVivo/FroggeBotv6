@@ -156,11 +156,11 @@ class ActivityManager(ObjectManager, ABC):
                 f"`{self.activity_name.lower()}s`."
             )
         )
-        channel = await U.listen_for(
+        channel = await U.select_channel(
             interaction=interaction,
-            prompt=prompt,
-            mentionable_type=U.MentionableType.Channel,
-            channel_restrictions=[ChannelType.text, ChannelType.forum]
+            guild=self.guild,
+            channel_type=f"{self.activity_name.title()} Channel",
+            channel_prompt=prompt
         )
         if channel is None:
             return

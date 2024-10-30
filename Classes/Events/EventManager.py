@@ -308,16 +308,14 @@ class EventManager(ObjectManager):
         prompt = U.make_embed(
             title="__Set Scheduling Channel__",
             description=(
-                "Please mention the channel where event scheduling messages will be sent.\n\n"
-
-                "This channel may be a standard text channel or a forum channel."
+                "Please select the channel where event scheduling messages will be sent."
             )
         )
-        channel = await U.listen_for(
+        channel = await U.select_channel(
             interaction=interaction,
-            prompt=prompt,
-            mentionable_type=U.MentionableType.Channel,
-            channel_restrictions=[ChannelType.text, ChannelType.forum]
+            guild=self.guild,
+            channel_type="Scheduling Channel",
+            channel_prompt=prompt
         )
         if channel is None:
             return

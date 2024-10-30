@@ -399,9 +399,9 @@ class Form(ManagedObject):
 
         prompt = U.make_embed(
             title="__Set Form Log Channel__",
-            description="Mention the channel where form responses should be logged."
+            description="Select the channel where form responses should be logged."
         )
-        channel = await U.listen_for(interaction, prompt, U.MentionableType.Channel)
+        channel = await U.select_channel(interaction, self.guild, "Form Log Channel", prompt)
         if channel is None:
             return
 
