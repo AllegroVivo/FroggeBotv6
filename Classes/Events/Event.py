@@ -32,6 +32,7 @@ from UI.Events import (
     EventListView,
     EventStaffManagementView,
     EventTemplateView,
+    EventPositionSelectView,
 )
 from Utilities import Utilities as U
 from logger import log
@@ -807,21 +808,11 @@ class Event(ManagedObject):
 
         log.info(self.guild, f"Adding position to event {self.name} ({self.id}).")
 
-        raw_options = self._mgr.guild.position_manager.select_options()
-        options = [
-            o
-            for o in raw_options
-            if o.value not in [p.position.id for p in self.positions]
-        ]
-        if not options:
-            log.debug(self.guild, "No positions available to add.")
-            options.append(SelectOption(label="No Positions Available", value="-1"))
-
         prompt = U.make_embed(
             title="__Select Position(s)__",
             description="Please select the position(s) you would like to add to the event."
         )
-        view = FroggeSelectView(interaction.user, options, multi_select=True, return_interaction=True)
+        view = EventPositionSelectView(interaction.user, self)
 
         await interaction.respond(embed=prompt, view=view)
         await view.wait()
@@ -830,30 +821,7 @@ class Event(ManagedObject):
             log.debug(self.guild, "Position addition cancelled.")
             return
 
-        pos_ids, inter = view.value
-        log.info(self.guild, f"Adding positions {pos_ids} to event {self.name} ({self.id}).")
-
-        modal = BasicNumberModal(
-            title="Staff Needed",
-            attribute="Staff Needed",
-            example="eg. '2'",
-            max_length=1
-        )
-
-        await inter.response.send_modal(modal)
-        await modal.wait()
-
-        if not modal.complete:
-            log.debug(self.guild, "Position addition cancelled.")
-            return
-
-        try:
-            quantity = int(modal.value)
-        except ValueError:
-            log.warning(self.guild, f"Invalid number '{modal.value}'.")
-            error = InvalidNumber(modal.value)
-            await interaction.respond(embed=error, ephemeral=True)
-            return
+        pos_ids, quantity = view.value
 
         for pos_id in pos_ids:
             pos = self._mgr.guild.position_manager[pos_id]

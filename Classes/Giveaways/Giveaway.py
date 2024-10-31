@@ -122,7 +122,7 @@ class Giveaway(BaseActivity):
     @property
     async def post_channel(self) -> Optional[TextChannel]:
 
-        return await self._mgr.channel
+        return await self._mgr.channel  # type: ignore
 
 ################################################################################
     def is_active(self) -> bool:
