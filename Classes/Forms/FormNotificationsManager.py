@@ -78,23 +78,22 @@ class FormNotificationsManager:
 
         roles = await self.roles
         users = await self.users
-
+        role_string = "\n".join([f'- {r.mention}' for r in roles])
+        user_string = "\n".join([f'- {u.mention}' for u in users])
+        
+        
         return U.make_embed(
             title="__Form Notifications__",
             description="Here are the roles and users that will be notified when a form is submitted.",
             fields=[
                 EmbedField(
                     name="__Roles__",
-                    value=", ".join(
-                        [r.mention for r in roles]
-                    ) if roles else "`None Set`",
+                    value=role_string,
                     inline=True,
                 ),
                 EmbedField(
                     name="__Users__",
-                    value=", ".join(
-                        [u.mention for u in users]
-                    ) if users else "`None Set`",
+                    value=user_string,
                     inline=True,
                 )
             ]
