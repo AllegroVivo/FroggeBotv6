@@ -20,7 +20,7 @@ from discord import (
 
 from Assets import BotEmojis
 from Classes.Common import ObjectManager
-from Enums import World
+from Enums import GameWorld
 from Errors import MaxItemsReached, InsufficientPermissions, UnableToVerify
 from UI.Common import FroggeSelectView, ConfirmCancelView
 from UI.Verification import VerificationManagerMenuView, CharacterNameModal, HomeWorldSelectView
@@ -382,7 +382,7 @@ class VerificationManager(ObjectManager):
         return inter2
 
 ################################################################################
-    async def get_name_and_world(self, interaction: Interaction) -> Optional[Tuple[str, str, World]]:
+    async def get_name_and_world(self, interaction: Interaction) -> Optional[Tuple[str, str, GameWorld]]:
 
         modal = CharacterNameModal()
 

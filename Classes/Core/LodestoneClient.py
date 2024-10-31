@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from discord import Interaction
 
-from Enums import World
+from Enums import GameWorld
 from Utilities import Utilities as U
 
 if TYPE_CHECKING:
@@ -36,7 +36,7 @@ class LodestoneClient:
         interaction: Interaction,
         forename: str,
         surname: str,
-        world: World
+        world: GameWorld
     ) -> Optional[int]:
         
         request_url = self.BASE_URL + f"?q={forename}+{surname}&worldname={world.proper_name}"
