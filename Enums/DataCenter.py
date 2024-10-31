@@ -42,35 +42,36 @@ class DataCenter(FroggeEnum):
             GameWorld.Sargatanas, GameWorld.Siren
         ):
             return cls.Aether
-        
+
         if world in (
             GameWorld.Balmung, GameWorld.Brynhildr, GameWorld.Coeurl,
             GameWorld.Diabolos, GameWorld.Goblin, GameWorld.Malboro,
             GameWorld.Mateus, GameWorld.Zalera
         ):
             return cls.Crystal
-        
+
         if world in (
             GameWorld.Halicarnassus, GameWorld.Maduin, GameWorld.Marilith,
-            GameWorld.Seraph
+            GameWorld.Seraph, GameWorld.Cuchulainn, GameWorld.Golem,
+            GameWorld.Kraken, GameWorld.Rafflesia,
         ):
             return cls.Dynamis
-        
+
         if world in (
             GameWorld.Behemoth, GameWorld.Excalibur, GameWorld.Exodus,
             GameWorld.Famfrit, GameWorld.Hyperion, GameWorld.Lamia,
             GameWorld.Leviathan, GameWorld.Ultros
         ):
             return cls.Primal
-        
+
         if world in (
-            GameWorld.Alpha, GameWorld.Lich, GameWorld.Odin, GameWorld.Phoenix, 
+            GameWorld.Alpha, GameWorld.Lich, GameWorld.Odin, GameWorld.Phoenix,
             GameWorld.Raiden, GameWorld.Shiva, GameWorld.Twintania, GameWorld.Zodiark
         ):
             return cls.Light
-        
+
         if world in (
-            GameWorld.Cerberus, GameWorld.Louisoix, GameWorld.Moogle, GameWorld.Omega, 
+            GameWorld.Cerberus, GameWorld.Louisoix, GameWorld.Moogle, GameWorld.Omega,
             GameWorld.Phantom, GameWorld.Ragnarok, GameWorld.Sagittarius, GameWorld.Spriggan
         ):
             return cls.Chaos

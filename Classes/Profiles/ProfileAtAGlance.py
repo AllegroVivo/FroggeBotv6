@@ -8,13 +8,14 @@ from discord import Interaction, Embed, EmbedField
 
 from Assets import BotEmojis
 from Enums import (
-    World,
+    GameWorld,
     Gender,
     Pronoun,
     Race,
     Orientation,
     Clan,
     FroggeEnum,
+    DataCenter,
 )
 from UI.Common import BasicTextModal, InstructionsInfo
 from UI.Profiles import (
@@ -55,7 +56,7 @@ class ProfileAtAGlance(ProfileSection):
 
         super().__init__(parent)
         
-        self._world: Optional[World] = kwargs.get("world")
+        self._world: Optional[GameWorld] = kwargs.get("world")
         self._gender: Optional[Union[Gender, str]] = kwargs.get("gender", None)
         self._pronouns: List[Pronoun] = kwargs.get("pronouns", None) or []
         self._race: Optional[Union[Race, str]] = kwargs.get("race", None)
@@ -71,7 +72,7 @@ class ProfileAtAGlance(ProfileSection):
         
         return cls(
             parent=parent,
-            world=World(data["world"]) if data["world"] is not None else None,
+            world=GameWorld(data["world"]) if data["world"] is not None else None,
             gender=(
                 Gender(int(data["gender"]))
                 if data["gender"].isdigit() and int(data["gender"]) < Gender.Custom.value 
@@ -100,12 +101,12 @@ class ProfileAtAGlance(ProfileSection):
     
 ################################################################################
     @property
-    def world(self) -> Optional[World]:
+    def world(self) -> Optional[GameWorld]:
     
         return self._world
     
     @world.setter
-    def world(self, value: Optional[World]) -> None:
+    def world(self, value: Optional[GameWorld]) -> None:
         
         self._world = value
         self.update()
@@ -295,7 +296,20 @@ class ProfileAtAGlance(ProfileSection):
         height_val = self.format_height()
         age_val = self.get_attribute_str(self.age)
         mare_val = self.get_attribute_str(self.mare)
-        world_val = self.get_attribute_str(self.world)
+
+        data_center = DataCenter.from_world(self.world) if self.world is not None else None
+        dc_name = f", {data_center.proper_name}" if data_center is not None else ""
+        if data_center in (DataCenter.Aether, DataCenter.Crystal, DataCenter.Dynamis, DataCenter.Primal):
+            region = ", NA"
+        elif data_center in (DataCenter.Light, DataCenter.Chaos):
+            region = ", EU"
+        elif data_center == DataCenter.Materia:
+            region = ", OC"
+        elif data_center in (DataCenter.Elemental, DataCenter.Gaia, DataCenter.Mana, DataCenter.Meteor):
+            region = ", JP"
+        else:
+            region = ""
+        world_val = f"{self.get_attribute_str(self.world)}{dc_name}{region}"
 
         fields = [
             EmbedField("__Race/Clan__", raceclan, True),
@@ -327,7 +341,7 @@ class ProfileAtAGlance(ProfileSection):
         ret = ""
         
         if self.world is not None:
-            world = self._world.proper_name if isinstance(self._world, World) else self._world
+            world = self._world.proper_name if isinstance(self._world, GameWorld) else self._world
             ret += f"__Home World:__ {world}\n"
 
         if self.gender is not None:

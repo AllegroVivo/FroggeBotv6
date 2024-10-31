@@ -20,6 +20,5 @@ from .Repeatability import Repeatability
 from .Timezone import Timezone
 from .UIComponentType import UIComponentType
 from .VIPMessageType import VIPMessageType
-from .World import World
 from ._Enum import FroggeEnum
 ################################################################################
