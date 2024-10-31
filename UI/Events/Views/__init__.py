@@ -1,4 +1,5 @@
 from .EventManagerStatusView import EventManagerStatusView
+from .EventPositionSelectView import EventPositionSelectView
 from .EventStaffManagementView import EventStaffManagementView
 from .EventListFrogginator import EventListFrogginator
 from .EventElementMenuView import EventElementMenuView

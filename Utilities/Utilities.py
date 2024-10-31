@@ -18,7 +18,7 @@ from discord import (
     ChannelType,
     User,
     Role,
-    Emoji, SelectOption, TextChannel, ForumChannel
+    Emoji, SelectOption, TextChannel, ForumChannel, Message
 )
 from discord.abc import GuildChannel
 
