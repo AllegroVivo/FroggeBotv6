@@ -341,13 +341,15 @@ class Utilities:
     
         try:
             if salary.endswith("k"):
-                return int(float(salary[:-1]) * 1000)
+                ret = int(float(salary[:-1]) * 1000)
             elif salary.endswith("m"):
-                return int(float(salary[:-1]) * 1000000)
+                ret = int(float(salary[:-1]) * 1000000)
             else:
-                return int(float(salary))
+                ret = int(float(salary))
         except ValueError:
             return
+        else:
+            return min(max(ret, 0), 999999999)
 
 ################################################################################
     @staticmethod

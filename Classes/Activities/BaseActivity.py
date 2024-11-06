@@ -160,7 +160,7 @@ class BaseActivity(ManagedObject, ABC):
             if not view.complete or view.value is False:
                 return
         
-        self.winners = random.sample(self._entries, self.num_winners)
+        self.winners = random.sample(self._entries, max(self.num_winners, len(self._entries)))
         
         if self._details.auto_notify:
             for winner in self.winners:
