@@ -44,7 +44,7 @@ class DataCenterSelect(Select):
         self.placeholder = DataCenter(int(self.values[0])).proper_name
         self.disabled = True
         
-        await self.view.edit_message_helper(interaction, view=self.view)
+        await interaction.edit(view=self.view)
         
 ################################################################################
 class HomeWorldSelect(Select):
@@ -56,7 +56,7 @@ class HomeWorldSelect(Select):
             options=GameWorld.select_options_by_dc(dc),
             max_values=1,
             disabled=False,
-            row=2
+            row=1
         )
         
         self.dc: DataCenter = dc
