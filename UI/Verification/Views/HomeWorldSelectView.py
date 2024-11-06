@@ -56,7 +56,7 @@ class HomeWorldSelect(Select):
             options=GameWorld.select_options_by_dc(dc),
             max_values=1,
             disabled=False,
-            row=1
+            row=2
         )
         
         self.dc: DataCenter = dc
