@@ -167,6 +167,7 @@ class Room(ManagedObject):
     def delete(self) -> None:
 
         self.bot.api.delete_room(self.id)
+        self._mgr._managed.remove(self)
 
 ################################################################################
     async def status(self) -> Embed:
