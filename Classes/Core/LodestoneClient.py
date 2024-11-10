@@ -67,27 +67,25 @@ class LodestoneClient:
             for link in entry_links 
             if re.match(r"^/lodestone/character/\d+/$", link['href'])
         ]
-    
-        if len(filtered_links) > 1:
-            error = U.make_error(
-                title="Multiple Character Results Found",
-                message=(
-                    f"Multiple character results were found for the name '{forename} {surname}' "
-                    f"on the world '{world.proper_name}'."
-                ),
-                solution=(
-                    "Please refine your search criteria to find the specific "
-                    "character you are looking for."
-                )
-            )
-            await interaction.respond(embed=error, ephemeral=True)
-            return
-    
-        # Extract the number from the href
-        href = filtered_links[0]['href']
-        character_id = int(href.split('/')[-2])
-    
-        return character_id
+
+        # Further filter by checking the name inside <p class="entry__name">
+        for link in filtered_links:
+            parent_div = link.find_next('div', class_='entry__box--world')
+            if parent_div:
+                name_tag = parent_div.find('p', class_='entry__name')
+                if name_tag and name_tag.text.strip().lower() == f"{forename} {surname}".lower():
+                    # Extract the character ID from the href
+                    return int(re.search(r"\d+", link['href']).group())
+
+        error = U.make_error(
+            title="Character Not Found with Exact Name",
+            message=(
+                f"No exact match found for '{forename} {surname}' on '{world.proper_name}'. "
+                "Try refining your search or checking the spelling."
+            ),
+            solution="Ensure the correct name and try again."
+        )
+        await interaction.respond(embed=error, ephemeral=True)
 
 ################################################################################
     async def fetch_character_profile(self, interaction: Interaction, char_id: int) -> Optional[BeautifulSoup]:
