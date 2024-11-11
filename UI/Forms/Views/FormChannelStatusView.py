@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from discord import User, Interaction, ButtonStyle
+from discord import User, Interaction, ButtonStyle, ChannelType
 
 from UI.Common import FroggeView, CloseMessageButton, FroggeButton
 
@@ -22,7 +22,7 @@ class FormChannelStatusView(FroggeView):
         button_list = [
             AddRoleButton(),
             RemoveRoleButton(),
-            ModifyCreateCategoryButton(),
+            ModifyCreateCategoryButton(form.create_type),
             CloseMessageButton(),
         ]
         for btn in button_list:
@@ -69,11 +69,12 @@ class RemoveRoleButton(FroggeButton):
 ################################################################################
 class ModifyCreateCategoryButton(FroggeButton):
     
-    def __init__(self):
-        
+    def __init__(self, create_type: ChannelType):
+
+        word = "Category" if create_type == ChannelType.text else "Channel"
         super().__init__(
             style=ButtonStyle.primary,
-            label="Select Create Category",
+            label=f"Select Creation {word}",
             disabled=False,
             row=0
         )

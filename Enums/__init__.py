@@ -1,4 +1,3 @@
-from .TransactionCategory import TransactionCategory
 from .ChannelDesignation import ChannelDesignation
 from .Clan import Clan
 from .DataCenter import DataCenter
@@ -18,6 +17,7 @@ from .ReactionRoleMessageType import ReactionRoleMessageType
 from .RedemptionLevel import RedemptionLevel
 from .Repeatability import Repeatability
 from .Timezone import Timezone
+from .TransactionCategory import TransactionCategory
 from .UIComponentType import UIComponentType
 from .VIPMessageType import VIPMessageType
 from ._Enum import FroggeEnum
