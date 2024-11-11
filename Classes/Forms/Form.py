@@ -12,6 +12,7 @@ from discord import (
     SelectOption,
     Message,
     NotFound,
+    ChannelType,
 )
 from discord.ext.pages import Page
 
@@ -59,6 +60,7 @@ class Form(ManagedObject):
         "_category",
         "_post_options",
         "_post_msg",
+        "_create_type",
     )
 
     MAX_QUESTIONS = 20
@@ -81,9 +83,11 @@ class Form(ManagedObject):
         self._notifications: FormNotificationsManager = (
             kwargs.get("notifications", FormNotificationsManager(self))
         )
+
         self._create_channel: bool = kwargs.get("create_channel", False)
         self._channel_roles: List[LazyRole] = kwargs.get("channel_roles", [])
         self._category: LazyChannel = LazyChannel(self, kwargs.get("category_id"))
+        self._create_type: Optional[ChannelType] = kwargs.get("create_type")
 
         self._post_options: FormPostOptions = FormPostOptions(self)
         self._post_msg: LazyMessage = LazyMessage(self, kwargs.get("post_url"))
@@ -129,6 +133,8 @@ class Form(ManagedObject):
         self._create_channel = data["create_channel"]
         self._channel_roles = [LazyRole(self, r) for r in data["channel_roles"]]
         self._category = LazyChannel(self, data["creation_category_id"])
+        # self._create_type = ChannelType(data["create_type"])
+        self._create_type = ChannelType.text
 
         self._post_options = FormPostOptions.load(self, data["post_options"])
         self._post_msg = LazyMessage(self, data["post_url"])
@@ -213,18 +219,30 @@ class Form(ManagedObject):
 
 ################################################################################
     @property
+    def create_type(self) -> Optional[ChannelType]:
+
+        return self._create_type
+
+    @create_type.setter
+    def create_type(self, value: Optional[ChannelType]) -> None:
+
+        self._create_type = value
+        self.update()
+
+################################################################################
+    @property
     async def channel_roles(self) -> List[Role]:
 
         return [await r.get() for r in self._channel_roles]
 
 ################################################################################
     @property
-    async def category(self) -> Optional[CategoryChannel]:
+    async def category(self) -> Optional[Union[TextChannel, CategoryChannel]]:
 
         return await self._category.get()
 
     @category.setter
-    def category(self, value: int) -> None:
+    def category(self, value: Union[TextChannel, CategoryChannel]) -> None:
 
         self._category.set(value)
 
@@ -248,6 +266,7 @@ class Form(ManagedObject):
             "create_channel": self._create_channel,
             "channel_roles": [r.id for r in self._channel_roles],
             "creation_category_id": self._category.id,
+            "create_type": self.create_type.value if self.create_type else None,
             "post_url": self._post_msg.id,
             "notify_roles": [r.id for r in self._notifications._roles],
             "notify_users": [u.id for u in self._notifications._users],
@@ -280,11 +299,13 @@ class Form(ManagedObject):
         )
         if self.create_channel:
             cat = await self.category
+            cat_type = "Category" if self.create_type == ChannelType.text else "Channel"
+            product_type = "Channel" if self.create_type == ChannelType.text else "Thread"
             desc += (
-                "__**Creation Category**__\n"
+                f"__**Creation {cat_type}**__\n"
                 f"{cat.mention if cat else '`Not Set`'}\n\n"
 
-                "__**Roles With Access to Created Channel**__\n" +
+                f"__**Roles With Access to Created {product_type}**__\n" +
                 ("\n".join(
                     f"* {r.mention}"
                     for r in await self.channel_roles
@@ -443,7 +464,37 @@ class Form(ManagedObject):
     async def toggle_create_channel(self, interaction: Interaction) -> None:
 
         self.create_channel = not self.create_channel
-        await interaction.respond("** **", delete_after=0.1)
+        if not self.create_channel:
+            return
+
+        options = [
+            SelectOption(
+                label="Text Channel",
+                value=str(ChannelType.text.value),
+                description="A new text channel will be created under the selected category."
+            ),
+            SelectOption(
+                label="Thread",
+                value=str(ChannelType.private_thread.value),
+                description="A new private thread will be created within the selected channel."
+            ),
+        ]
+        prompt = U.make_embed(
+            title="__Set Channel Creation Type__",
+            description="Please select the type of channel to create."
+        )
+        view = FroggeSelectView(interaction.user, options)
+
+        await interaction.respond(embed=prompt, view=view)
+        await view.wait()
+
+        if not view.complete or view.value is False:
+            return
+
+        create_type = ChannelType(int(view.value))
+        if self.create_type != create_type:
+            self.category = None
+        self.create_type = create_type
 
 ################################################################################
     async def notifications_menu(self, interaction: Interaction) -> None:
@@ -456,16 +507,26 @@ class Form(ManagedObject):
         guild = self._mgr.guild.parent
         member = await self._mgr.guild.get_or_fetch_member(user.id)
 
-        if self._category is not None:
-            cat_channel = await self.category
-            channel = await cat_channel.create_text_channel(member.display_name)
+        if self.create_type is ChannelType.text:
+            if await self.category is not None and (await self.category).type is ChannelType.category:
+                cat_channel = await self.category
+                channel = await cat_channel.create_text_channel(member.display_name)
+            else:
+                channel = await guild.create_text_channel(member.display_name)
         else:
-            channel = await guild.create_text_channel(member.display_name)
+            if await self.category is not None and (await self.category).type is ChannelType.text:
+                cat_channel = await self.category
+                channel = await cat_channel.create_thread(name=member.display_name)
+            else:
+                channel = await guild.create_text_channel(member.display_name)
 
-        await channel.set_permissions(guild.default_role, view_channel=False)
-        await channel.set_permissions(member, view_channel=True)
-        for role in await self.channel_roles:
-            await channel.set_permissions(role, view_channel=True)
+        if channel.type is ChannelType.text:
+            await channel.set_permissions(guild.default_role, view_channel=False)
+            await channel.set_permissions(member, view_channel=True)
+            for role in await self.channel_roles:
+                await channel.set_permissions(role, view_channel=True)
+        else:
+            await channel.add_user(member)
 
         await channel.send(content=mention_str, embed=await response.compile())
 
@@ -473,13 +534,16 @@ class Form(ManagedObject):
     async def channel_status(self) -> Embed:
 
         cat_channel = await self.category
+        cat_type = "Category" if self.create_type == ChannelType.text else "Channel"
+        product_type = "Channel" if self.create_type == ChannelType.text else "Thread"
+
         return U.make_embed(
             title=f"__Channel Roles for: `{self.name}`__",
             description=(
-                "__**Creation Category**__\n"
+                f"__**Creation {cat_type}**__\n"
                 f"{cat_channel.mention if cat_channel else '`Not Set`'}\n\n"
 
-                "__**Roles With Access to Created Channel**__\n" +
+                f"__**Roles With Access to Created {product_type}**__\n" +
                 (
                     "\n".join(
                         f"* {r.mention} ({r.name})"
@@ -536,27 +600,34 @@ class Form(ManagedObject):
 ################################################################################
     async def set_category(self, interaction: Interaction) -> None:
 
-        options = [
-            SelectOption(
-                label=cat.name,
-                value=str(cat.id)
+        if self.create_type is ChannelType.text:
+            options = [
+                SelectOption(
+                    label=cat.name,
+                    value=str(cat.id)
+                )
+                for cat in self._mgr.guild.parent.categories
+            ]
+
+            prompt = U.make_embed(
+                title="__Set Creation Category__",
+                description="Please select the category where created channels should be placed."
             )
-            for cat in self._mgr.guild.parent.categories
-        ]
+            view = FroggeSelectView(interaction.user, options)
 
-        prompt = U.make_embed(
-            title="__Set Creation Category__",
-            description="Please select the category where created channels should be placed."
-        )
-        view = FroggeSelectView(interaction.user, options)
+            await interaction.respond(embed=prompt, view=view)
+            await view.wait()
 
-        await interaction.respond(embed=prompt, view=view)
-        await view.wait()
+            if not view.complete or view.value is False:
+                return
 
-        if not view.complete or view.value is False:
-            return
+            self.category = self.bot.get_channel(int(view.value))
+        else:
+            channel = await U.select_channel(interaction, self.guild, "Creation Channel")
+            if channel is None:
+                return
 
-        self.category = self.bot.get_channel(int(view.value))
+            self.category = channel
 
 ################################################################################
     async def post_options_menu(self, interaction: Interaction) -> None:
