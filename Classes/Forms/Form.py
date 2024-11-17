@@ -688,6 +688,8 @@ class Form(ManagedObject):
             in self.questions
         ]
         frogginator = Frogginator(pages, self)
+        # DO NOT make this ephemeral. The message becomes decoupled during the update
+        # process, and we get a 404 Error back from Discord when we can't find it.
         await frogginator.respond(interaction)  # , ephemeral=True)
 
 ################################################################################

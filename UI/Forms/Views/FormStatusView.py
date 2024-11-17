@@ -235,17 +235,8 @@ class PostFormButton(FroggeButton):
             row=4
         )
 
-    def set_attributes(self) -> None:
-        self.emoji = (
-            BotEmojis.Cross
-            if self.view.ctx._post_msg.id is None
-            else BotEmojis.CheckGreen
-        )
-
     async def callback(self, interaction: Interaction):
         await self.view.ctx.post(interaction)
-        self.set_attributes()
-
         await self.view.edit_message_helper(
             interaction, embed=await self.view.ctx.status(), view=self.view
         )

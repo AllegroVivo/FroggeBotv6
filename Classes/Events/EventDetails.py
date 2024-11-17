@@ -320,7 +320,7 @@ class EventDetails:
 
         prompt = U.make_embed(
             title="Set Event Image",
-            description="Please send the image you wish to use for the event in this channel now.",
+            description="Please send the image you want to use for the event in this channel now.",
         )
 
         if image := await U.wait_for_image(interaction, prompt):
