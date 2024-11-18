@@ -13,7 +13,7 @@ from discord import (
     ChannelType,
     Forbidden,
     SelectOption,
-    NotFound,
+    NotFound, HTTPException,
 )
 from discord.ext.pages import Page
 
@@ -1000,6 +1000,9 @@ class Event(ManagedObject):
             await post_message.edit(embeds=await self.compile(), view=view)
         except NotFound:
             self.post_message = None
+            return False
+        except HTTPException:
+            log.warning(self.guild, "Failed to update event post.")
             return False
         else:
             return True
