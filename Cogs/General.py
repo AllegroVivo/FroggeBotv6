@@ -55,6 +55,15 @@ class General(Cog):
         await guild.activities_manager.raffle_manager.add_tickets(ctx.interaction, user, qty)
 
 ################################################################################
+    @slash_command(
+        name="help",
+        description="Get a list of available commands."
+    )
+    async def help(self, ctx: ApplicationContext) -> None:
+
+        await self.bot.help(ctx.interaction)
+
+################################################################################
 def setup(bot: "FroggeBot") -> None:
 
     bot.add_cog(General(bot))

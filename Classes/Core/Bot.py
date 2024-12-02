@@ -8,12 +8,14 @@ from typing import TYPE_CHECKING
 import json
 
 import pytz
-from discord import Attachment, Bot, TextChannel, ApplicationContext, DiscordException, File
+from discord import Attachment, Bot, TextChannel, ApplicationContext, DiscordException, File, Interaction
 
+from Assets import BotImages
 from logger import log
 from .APIClient import APIClient
 from .GuildManager import GuildManager
 from .LodestoneClient import LodestoneClient
+from Utilities import Utilities as U
 
 if TYPE_CHECKING:
     from Classes import GuildData
@@ -173,5 +175,24 @@ class FroggeBot(Bot):
             f"# __Error in Command:__ `{ctx.command.name}`\n```{tb_str}```",
             file=File(fp)
         )
+
+################################################################################
+    async def help(self, interaction: Interaction) -> None:
+
+        embed = U.make_embed(
+            title="FroggeBot Help",
+            description=(
+                "FroggeBot is a Discord application designed to help manage and facilitate "
+                "FFXIV role-playing venue events, activities, and management.\n\n"
+                
+                "For more detailed information, visit the [Online Documentation]"
+                "(https://allegrovivo.github.io/FroggeDocs/).\n\n"
+                
+                "Or you can visit our [Discord Server](https://discord.gg/CxQNuYVFK3)!\n\n"
+            ),
+            color=int("4ABC23", 16),
+            thumbnail_url=BotImages.ThumbsUpFrog
+        )
+        await interaction.respond(embed=embed, ephemeral=True)
 
 ################################################################################
