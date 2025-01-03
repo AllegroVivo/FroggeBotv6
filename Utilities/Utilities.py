@@ -146,8 +146,9 @@ class Utilities:
             The finished embed object.
         """
 
-        if not title.startswith("__") and not title.endswith("__"):
-            title = f"__{title}__"
+        if title:
+            if not title.startswith("__") and not title.endswith("__"):
+                title = f"__{title}__"
 
         embed = Embed(
             colour=(
