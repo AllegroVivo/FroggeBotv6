@@ -277,7 +277,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _normal_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         try:
@@ -305,7 +305,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _unique_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         if role in member.roles:
@@ -347,7 +347,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _verify_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         if role not in member.roles:
@@ -386,7 +386,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _drop_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         if role in member.roles:
@@ -402,7 +402,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _reverse_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         try:
@@ -420,7 +420,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _limit_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         role_limit = self._parent.type_parameter
@@ -459,7 +459,7 @@ class ReactionRole(Identifiable):
 ################################################################################
     async def _binding_role_callback(self, interaction: Interaction, member: Member) -> None:
 
-        await interaction.response.defer(invisible=False)
+        await interaction.response.defer(invisible=False, ephemeral=True)
 
         role = await self.role
         if role not in member.roles:
