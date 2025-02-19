@@ -220,13 +220,14 @@ class FroggeEmbed(ManagedObject):
 ################################################################################
     def to_dict(self) -> Dict[str, Any]:
 
-        return {
+        ret = {
             "color": self.color.value if self.color else None,
             "description": self.description,
             "timestamp": self.timestamp.isoformat() if self.timestamp else None,
             "title": self.title,
             "url": self.url,
         }
+        return ret
 
 ################################################################################
     def delete(self) -> None:
@@ -301,7 +302,7 @@ class FroggeEmbed(ManagedObject):
             color=self.color,
             title=self.title,
             url=self.url,
-            description=self.description,
+            description=self.description or "** **",
             timestamp=self.timestamp,
             author_icon=self.header.icon_url,
             author_text=self.header.text,
