@@ -130,14 +130,14 @@ class Admin(Cog):
         await guild.embed_manager.main_menu(ctx.interaction)
 
 ################################################################################
-    @admin.command(
-        name="finance",
-        description="Manage transactions and financial settings for this server."
-    )
-    async def manage_finances(self, ctx: ApplicationContext) -> None:
-
-        guild = self.bot[ctx.guild_id]
-        await guild.finance_manager.main_menu(ctx.interaction)
+    # @admin.command(
+    #     name="finance",
+    #     description="Manage transactions and financial settings for this server."
+    # )
+    # async def manage_finances(self, ctx: ApplicationContext) -> None:
+    #
+    #     guild = self.bot[ctx.guild_id]
+    #     await guild.finance_manager.main_menu(ctx.interaction)
 
 ################################################################################
     @admin.command(
