@@ -159,44 +159,44 @@ class Admin(Cog):
         await guild.staff_manager.hire(ctx.interaction, user)
 
 ################################################################################
-    @admin.command(
-        name="transaction",
-        description="Log a venue transaction with a bot."
-    )
-    async def log_transaction(
-        self,
-        ctx: ApplicationContext,
-        amount: Option(
-            SlashCommandOptionType.integer,
-            name="amount",
-            description="The amount of the transaction.",
-            required=True,
-            max_value=999999999,
-        ),
-        category: Option(
-            SlashCommandOptionType.string,
-            name="category",
-            description="The category of the transaction.",
-            required=True,
-            # This line works fine, Intellisense just doesn't like it.
-            choices=[OptionChoice(name=opt.label, value=opt.value) for opt in TransactionCategory.select_options()]  # type: ignore
-        ),
-        memo: Option(
-            SlashCommandOptionType.string,
-            name="memo",
-            description="A memo for the transaction.",
-            required=False
-        ),
-        tags: Option(
-            SlashCommandOptionType.string,
-            name="tags",
-            description="Comma-separated lookup tags for the transaction.",
-            required=False
-        )
-    ) -> None:
-
-        guild = self.bot[ctx.guild_id]
-        await guild.finance_manager.record_transaction(ctx.interaction, amount, category, memo, tags)
+    # @admin.command(
+    #     name="transaction",
+    #     description="Log a venue transaction with a bot."
+    # )
+    # async def log_transaction(
+    #     self,
+    #     ctx: ApplicationContext,
+    #     amount: Option(
+    #         SlashCommandOptionType.integer,
+    #         name="amount",
+    #         description="The amount of the transaction.",
+    #         required=True,
+    #         max_value=999999999,
+    #     ),
+    #     category: Option(
+    #         SlashCommandOptionType.string,
+    #         name="category",
+    #         description="The category of the transaction.",
+    #         required=True,
+    #         # This line works fine, Intellisense just doesn't like it.
+    #         choices=[OptionChoice(name=opt.label, value=opt.value) for opt in TransactionCategory.select_options()]  # type: ignore
+    #     ),
+    #     memo: Option(
+    #         SlashCommandOptionType.string,
+    #         name="memo",
+    #         description="A memo for the transaction.",
+    #         required=False
+    #     ),
+    #     tags: Option(
+    #         SlashCommandOptionType.string,
+    #         name="tags",
+    #         description="Comma-separated lookup tags for the transaction.",
+    #         required=False
+    #     )
+    # ) -> None:
+    #
+    #     guild = self.bot[ctx.guild_id]
+    #     await guild.finance_manager.record_transaction(ctx.interaction, amount, category, memo, tags)
 
 ################################################################################
     @admin.command(
