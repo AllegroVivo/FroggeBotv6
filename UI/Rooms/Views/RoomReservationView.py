@@ -23,10 +23,13 @@ class RoomReservationView(View):
         
         self.room: Room = room
 
-        if not self.room.disabled:
-            self.add_item(ReserveRoomButton(room))
-            if self.room.locked:
-                self.add_item(NotifyOwnerButton(room))
+        if not room._occupant:
+            if not self.room.disabled:
+                self.add_item(ReserveRoomButton(room))
+                if self.room.locked:
+                    self.add_item(NotifyOwnerButton(room))
+        else:
+            self.add_item(ReleaseRoomButton(room))
 
 ################################################################################
 class ReserveRoomButton(FroggeButton):
@@ -61,5 +64,29 @@ class NotifyOwnerButton(FroggeButton):
 
     async def callback(self, interaction: Interaction):
         await self.view.room.notify_owner(interaction)
+
+################################################################################
+class ReleaseRoomButton(FroggeButton):
+
+    def __init__(self, room: Room):
+
+        super().__init__(
+            style=ButtonStyle.primary,
+            label="Release Reservation",
+            disabled=False,
+            row=0,
+            emoji=BotEmojis.Unlock,
+            custom_id=f"release-{room.id}"
+        )
+
+    async def callback(self, interaction: Interaction):
+        if interaction.user.id != self.view.room._occupant.id:
+            await interaction.response.send_message(
+                "You cannot release this room as you are not the occupant.",
+                ephemeral=True
+            )
+            return
+        await self.view.room.release()
+        await interaction.edit()
 
 ################################################################################

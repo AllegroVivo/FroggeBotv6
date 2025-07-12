@@ -528,11 +528,13 @@ class Room(ManagedObject):
         await interaction.respond(embed=embed, ephemeral=True)
 
 ################################################################################
-    def _reset_in_use(self) -> None:
+    async def release(self) -> None:
 
         self._in_use = False
         self._occupant = None
         self._end_dt = None
+
+        await self.update_post_components()
 
 ################################################################################
     async def check_end_time(self) -> None:
@@ -544,7 +546,7 @@ class Room(ManagedObject):
             return dt if dt.tzinfo is not None else self.py_tz.localize(dt)
 
         if localize_if_needed(datetime.now()) >= localize_if_needed(self._end_dt):
-            self._reset_in_use()
+            await self.release()
             await self.update_post_components()
 
 ################################################################################
