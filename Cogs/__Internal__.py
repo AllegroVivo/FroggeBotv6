@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import time, UTC
 from typing import TYPE_CHECKING
 
 from discord import Cog, Guild, ApplicationContext, DiscordException
@@ -24,7 +25,7 @@ class Internal(Cog):
         await self.bot.load_all()
         
         log.info(None, "Starting tasks...")
-        self.check_room_end_times.start()
+        self.perform_checks.start()
         
         log.info(None, "FroggeBot Online!")
 
@@ -37,16 +38,16 @@ class Internal(Cog):
         existing = self.bot.api.check_guild(guild.id)
         if existing["guild_id"] != 0:
             log.info(None, f"Guild {guild.name} already exists in the database.")
-            return
-
-        log.info(None, f"Guild {guild.name} does not exist in the database.")
+            payload = self.bot.api.check_guild(guild.id)
+        else:
+            log.info(None, f"Guild {guild.name} does not exist in the database.")
+            payload = self.bot.api.create_guild(guild.id)
 
         # If not existing, we add it to the database
-        payload = self.bot.api.create_guild(guild.id)
         frogge = self.bot.guild_manager.init_guild(guild)
         await frogge.load_all(payload)
 
-        log.info(None, f"Guild {guild.name} added to the database.")
+        log.info(None, f"Guild {guild.name} Loaded.")
 
 ################################################################################
     @Cog.listener("on_member_join")
@@ -68,10 +69,11 @@ class Internal(Cog):
 
 ################################################################################
     @loop(minutes=1)
-    async def check_room_end_times(self) -> None:
+    async def perform_checks(self) -> None:
 
         for frogge in self.bot.guild_manager.fguilds:
             await frogge.rooms_manager.check_end_times()
+            await frogge.vip_manager.perform_checks()
 
 ################################################################################
 def setup(bot: FroggeBot) -> None:
