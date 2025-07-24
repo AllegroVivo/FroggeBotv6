@@ -323,6 +323,11 @@ class VerificationManager(ObjectManager):
 ################################################################################
     async def verify_captcha(self, interaction: Interaction) -> Optional[Interaction]:
 
+        try:
+            await interaction.response.defer(invisible=False)
+        except:
+            pass
+
         code = str(random.randint(100000, 999999))
         fp = f"Files/{code}captcha.png"
 
