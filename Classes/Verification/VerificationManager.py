@@ -375,7 +375,7 @@ class VerificationManager(ObjectManager):
             return
 
         try:
-            await inter.message.delete()
+            await inter.delete()
         except NotFound:
             pass
 
