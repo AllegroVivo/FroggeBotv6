@@ -335,6 +335,8 @@ class VerificationManager(ObjectManager):
         captcha.write(code, fp)
 
         file = File(fp, filename="captcha.png")
+        if self._void is None:
+            self._void = await self.bot.fetch_channel(self.CAPTCHA_VOID)
         message = await self._void.send(file=file)
         image_url = message.attachments[0].url
 
