@@ -79,13 +79,13 @@ class EventDetails:
     def copy(cls: Type[ED], parent: Event, template: Event) -> ED:
 
         if template.start_time and template.end_time:
-            year = datetime.now(UTC).year
-            start_day = end_day = datetime.now(UTC).day
+            now = datetime.now(UTC)
+            start_day = end_day = now.day
             if template.end_time.time() < template.start_time.time():
                 end_day += 1
 
-            start_time = template.start_time.replace(day=start_day, year=year)
-            end_time = template.end_time.replace(day=end_day, year=year)
+            start_time = template.start_time.replace(month=now.month, day=start_day, year=now.year)
+            end_time = template.end_time.replace(month=now.month, day=end_day, year=now.year)
         else:
             start_time = end_time = None
 
