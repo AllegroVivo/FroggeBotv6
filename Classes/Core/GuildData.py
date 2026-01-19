@@ -253,7 +253,8 @@ class GuildData:
         except NotFound:
             return
         else:
-            log.debug(self, f"Role Fetched: {role.name}")
+            if role:
+                log.debug(self, f"Role Fetched: {role.name}")
             return role
         
 ################################################################################
