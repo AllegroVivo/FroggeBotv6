@@ -212,7 +212,7 @@ class VIPManager:
                 user = await member.user
                 if user is None:
                     continue
-                member_str = f"{user.display_name} - {user.mention}"
+                member_str += f"{user.display_name} - {user.mention}\n"
             embed = U.make_embed(
                 color=tier.color or FroggeColor.embed_background(),
                 title=f"__`{tier.name}`__",
